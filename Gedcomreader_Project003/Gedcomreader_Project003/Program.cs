@@ -20,18 +20,19 @@ namespace Gedcomreader_Project003
             // How to: Write to a Text File. You can change the path and
             // file name to substitute text files of your own.
 
-            //string path = "C:\\Users\\Amit\\Desktop\\test\\TGC551.ged";
-            string path = "C:\\test\\sample_family.ged";
-           // string path = "C:\\Users\\Amit\\Desktop\\Agile\\Amitkumar_mistry_Project002\\GED\\Amit_Mistry_Project001-BloodTree.ged";
+            string path = "C:\\Users\\Amit\\Desktop\\test\\TGC551.ged";
+            //string path = "C:\\test\\sample_family.ged";
+            // string path = "C:\\Users\\Amit\\Desktop\\Agile\\Amitkumar_mistry_Project002\\GED\\Amit_Mistry_Project001-BloodTree.ged";
 
             // Example #1
             // Read the file as one string.
-            string text = System.IO.File.ReadAllText(@"C:\\Users\\Amit\\Desktop\\test\\TGC551.ged");
+            string text = System.IO.File.ReadAllText(@"C:\\test\\data.txt");
 
             Hashtable hs = new Hashtable();
 
             List<INDI> Individuals = new List<INDI>();
             List<FAM> Family = new List<FAM>();
+
 
 
             // Display the file contents to the console. Variable text is a string.
@@ -61,11 +62,15 @@ namespace Gedcomreader_Project003
             
             string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
 
+            
+            string[] columnsfamily = { "FAMILYID", "MARRID", "DIVORCED", "HUSBANDID", "HUSBANDNAME", "WIFEID", "WIFENAME", "CHILDREN" };
+
+
             foreach (string Node in Holder)
             {
 
                 //Sub Split the string on the returns to get a true block of info
-                string[] SubNode = Node.Replace("\n", "\r").Split('\r');
+                string[] SubNode = Node.Replace("\r\n", "\r").Split('\r');
                 //If a individual is found
 
                 for (int i=0;i<SubNode.Length;i++)
@@ -79,7 +84,7 @@ namespace Gedcomreader_Project003
                         //Find the name remove extra formating for last name
                         I.Name = SubNode[FindIndexinArray(SubNode, "NAME")].Replace("1 NAME", "").Replace("/", "").Trim();
 
-
+              //          I.Name= SubNode[++i].Replace("1 NAME", "").Replace("/", "").Trim();
 
                         if (FindIndexinArray(SubNode, "SEX") != -1)
                         {
@@ -119,7 +124,7 @@ namespace Gedcomreader_Project003
                     }
 
                     // Start Family section
-                    else if (Regex.IsMatch(SubNode[i], @"\bFAM\b")  /*SubNode[i].Contains("FAM")*/)
+                    else if (SubNode[i].Contains("FAM")) //(Regex.IsMatch(SubNode[i], @"\bFAM\b") 
                     {
                         //grab Fam id from node early on to keep from doing it over and over
                         string FamID = SubNode[i].Replace("@ FAM", "");
@@ -166,7 +171,13 @@ namespace Gedcomreader_Project003
             PrintLine();
 
             printIndividual(Individuals);
-            //printFamily(Family);
+
+            Console.WriteLine("\n");
+
+            PrintLine();
+            PrintRow(columnsfamily);
+            PrintLine();
+            printFamily(Family);
             
             // Keep the console window open in debug mode.
             Console.WriteLine("Press any key to exit.");
@@ -215,12 +226,12 @@ namespace Gedcomreader_Project003
             }
         }
 
-
         static private void printFamily(List<FAM> lst)
         {
             foreach ( FAM f in lst)
             {
-                Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}",f.FamID, f.Married, f.Divorced,f.HusbandID,f.Husbandname,f.Wifeid,f.Wifename,f.childeren);
+                Console.WriteLine("{0,-10},{1,-30},{2,-40},{3,-50},{4,-60},{5,-70},{6,-75},{7,-80}",
+                    f.FamID, f.Married, f.Divorced,f.HusbandID,f.Husbandname,f.Wifeid,f.Wifename,f.childeren);
             }
         }
 

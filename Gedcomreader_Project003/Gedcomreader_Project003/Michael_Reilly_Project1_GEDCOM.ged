@@ -1,0 +1,156 @@
+0 HEAD
+1 SOUR Family Echo
+2 WWW http://www.familyecho.com/
+1 FILE My Family
+1 DATE 29 JAN 2017
+1 DEST ANSTFILE
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 SUBM @I1@
+2 NAME Jack Sparrow
+1 SUBN
+1 CHAR UTF-8
+0 @I1@ INDI
+1 NAME Jack /Sparrow/
+2 GIVN Jack
+2 SURN Sparrow
+2 _MARNM Sparrow
+1 SEX M
+1 BIRT
+2 DATE 8 JAN 1950
+1 DEAT Y
+2 DATE 16 JUN 1999
+1 FAMS @F1@
+1 FAMC @F2@
+0 @I2@ INDI
+1 NAME Evelyn /Sparrow/
+2 GIVN Evelyn
+2 SURN Sparrow
+2 _MARNM Sparrow
+1 SEX F
+1 BIRT
+2 DATE 17 FEB 1952
+1 FAMS @F1@
+0 @I3@ INDI
+1 NAME Richard /Sparrow/
+2 GIVN Richard
+2 SURN Sparrow
+2 _MARNM Sparrow
+1 SEX M
+1 BIRT
+2 DATE 1 MAR 1930
+1 FAMS @F2@
+1 FAMS @F3@
+0 @I4@ INDI
+1 NAME Elanor /Richards/
+2 GIVN Elanor
+2 SURN Richards
+2 _MARNM Sparrow
+1 SEX F
+1 BIRT
+2 DATE 4 MAR 1932
+1 FAMS @F2@
+0 @I5@ INDI
+1 NAME Jim /Sparrow/
+2 GIVN Jim
+2 SURN Sparrow
+2 _MARNM Sparrow
+1 SEX M
+1 BIRT
+2 DATE 10 JUL 1953
+1 FAMS @F4@
+1 FAMS @F5@
+1 FAMC @F2@
+0 @I6@ INDI
+1 NAME Margaret /Smith/
+2 GIVN Margaret
+2 SURN Smith
+2 _MARNM Walker
+1 SEX F
+1 BIRT
+2 DATE 13 NOV 1953
+1 FAMS @F5@
+0 @I7@ INDI
+1 NAME Billy /Sparrow/
+2 GIVN Billy
+2 SURN Sparrow
+2 _MARNM Sparrow
+1 SEX M
+1 BIRT
+2 DATE 17 DEC 0197
+1 FAMC @F5@
+0 @I8@ INDI
+1 NAME Madeline /Henry/
+2 GIVN Madeline
+2 SURN Henry
+2 _MARNM Sparrow
+1 SEX F
+1 BIRT
+2 DATE 5 JUN 1955
+1 FAMS @F4@
+0 @I9@ INDI
+1 NAME Kevin /Sparrow/
+2 GIVN Kevin
+2 SURN Sparrow
+2 _MARNM Sparrow
+1 SEX M
+1 BIRT
+2 DATE 17 DEC 1978
+1 FAMC @F4@
+0 @I10@ INDI
+1 NAME William /Sparrow/
+2 GIVN William
+2 SURN Sparrow
+2 _MARNM Sparrow
+1 SEX M
+1 BIRT
+2 DATE 8 MAY 1968
+1 FAMC @F1@
+0 @I11@ INDI
+1 NAME Jesse /Stivala/
+2 GIVN Jesse
+2 SURN Stivala
+2 _MARNM Sparrow
+1 SEX F
+1 BIRT
+2 DATE 2 FEB 1930
+1 DEAT Y
+2 DATE 6 MAY 1948
+1 FAMS @F3@
+0 @I12@ INDI
+1 NAME Sarah /Sparrow/
+2 GIVN Sarah
+2 SURN Sparrow
+2 _MARNM Sparrow
+1 SEX F
+1 BIRT
+2 DATE 11 MAR 1974
+1 FAMC @F1@
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 CHIL @I10@
+1 CHIL @I12@
+1 _CURRENT Y
+0 @F2@ FAM
+1 HUSB @I3@
+1 WIFE @I4@
+1 CHIL @I1@
+1 CHIL @I5@
+1 _CURRENT Y
+0 @F3@ FAM
+1 HUSB @I3@
+1 WIFE @I11@
+1 _CURRENT N
+0 @F4@ FAM
+1 HUSB @I5@
+1 WIFE @I8@
+1 CHIL @I9@
+1 _CURRENT Y
+0 @F5@ FAM
+1 HUSB @I5@
+1 WIFE @I6@
+1 CHIL @I7@
+1 _CURRENT N
+0 TRLR

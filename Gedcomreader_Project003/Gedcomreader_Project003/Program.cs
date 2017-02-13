@@ -24,14 +24,15 @@ namespace Gedcomreader_Project003
             // directory in debug
             //--------------------------
 
-            string path = (Environment.CurrentDirectory).Substring(0, Environment.CurrentDirectory.Length-9) + "TGC551.ged";
+            string directory = (Environment.CurrentDirectory).Substring(0, Environment.CurrentDirectory.Length-10);
+            string path = System.IO.Directory.GetFiles(directory, "*.ged")[0];
             
             // The files used in this example are created in the topic
             // How to: Write to a Text File. You can change the path and
             // file name to substitute text files of your own.
 
-            //string path = "C:\\Users\\Amit\\Desktop\\test\\TGC551.ged";
-            //string path = "C:\\test\\sample_family.ged";
+            // string path = "C:\\Users\\Amit\\Desktop\\test\\TGC551.ged";
+            // string path = "C:\\test\\sample_family.ged";
             // string path = "C:\\Users\\Amit\\Desktop\\Agile\\Amitkumar_mistry_Project002\\GED\\Amit_Mistry_Project001-BloodTree.ged";
 
             // Example #1
@@ -85,7 +86,7 @@ namespace Gedcomreader_Project003
 
                 for (int i=0;i<SubNode.Length;i++)
                 {
-                    if (SubNode[i].Contains("INDI"))
+                    if (SubNode[i].Contains(" INDI"))
                     {
                         //Create new Structure
                         INDI I = new INDI();
@@ -134,7 +135,7 @@ namespace Gedcomreader_Project003
                     }
 
                     // Start Family section
-                    else if (SubNode[i].Contains("FAM")) //(Regex.IsMatch(SubNode[i], @"\bFAM\b") 
+                    else if (SubNode[i].Contains(" FAM")) //(Regex.IsMatch(SubNode[i], @"\bFAM\b") 
                     {
                         //grab Fam id from node early on to keep from doing it over and over
                         string FamID = SubNode[i].Replace("@ FAM", "");

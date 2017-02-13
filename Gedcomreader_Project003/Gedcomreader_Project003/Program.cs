@@ -111,7 +111,7 @@ namespace Gedcomreader_Project003
                                 I.death = SubNode[FindIndexinArray(SubNode, "1 DEAT")].Replace("1 DEAT ", "").Trim();
                                 I.Dead = true;
                             }
-                        }
+                        }   
 
 
 
@@ -130,38 +130,105 @@ namespace Gedcomreader_Project003
                         string FamID = SubNode[i].Replace("@ FAM", "");
 
                         // Multiple children can exist for each family so this section had to be a bit more dynaimic
-
+                        FAM F = new FAM();
+                        List<string> str = new List<string>();
                         // Look at each line of node
                         foreach (string Line in SubNode)
                         {
                             // If node is HUSB
+                            
                             if (Line.Contains("1 HUSB"))
                             {
+                                
 
-                                FAM F = new FAM();
+                                //        FAM F = new FAM();
                                 F.FamID = FamID;
-                                F.type = "PAR";
-                                F.IndiID = Line.Replace("1 HUSB", "").Replace("@", "").Trim();
-                                Family.Add(F);
+                                // F.type = "PAR";
+                                // F.HusbandID = Line.Replace("1 HUSB", "").Replace("@", "").Trim();
+                                 string husbandid = Line.Replace("1 HUSB", "").Replace("@", "").Trim();
+                                //Family.Add(F);
+                                str.Add(FamID);
+                                str.Add(husbandid);
                             }
                             //If node for Wife
                             else if (Line.Contains("1 WIFE"))
                             {
-                                FAM F = new FAM();
-                                F.FamID = FamID;
-                                F.type = "PAR";
-                                F.IndiID = Line.Replace("1 WIFE", "").Replace("@", "").Trim();
-                                Family.Add(F);
+                                //  FAM F = new FAM();
+                                //  F.FamID = FamID;
+                                //  F.type = "PAR";
+                                // F.Wifeid = Line.Replace("1 WIFE", "").Replace("@", "").Trim();
+
+                                string wifeid = Line.Replace("1 WIFE", "").Replace("@", "").Trim();
+
+                                str.Add(wifeid);   
+
+                               // Family.Add(F);
+                            }
+                            else if(Line.Contains("1 MARR"))
+                            {
+
+                            }
+                            else if(SubNode[i].Contains("FAM") && Line.Contains("2 DATE"))
+                            {
+                                if (str.Count > 0)
+                                {
+                                    string marriagedate = Line.Replace("2 DATE", "").Trim();
+                                    str.Add(marriagedate);
+                                }
                             }
                             //if node for multi children
                             else if (Line.Contains("1 CHIL"))
                             {
-                                FAM F = new FAM();
-                                F.FamID = FamID;
-                                F.type = "CHIL";
-                                F.IndiID = Line.Replace("1 CHIL", "").Replace("@", "");
-                                Family.Add(F);
+                              //  FAM F = new FAM();
+                               // F.FamID = FamID;
+                               // F.type = "CHIL";
+                               // F.IndiID = Line.Replace("1 CHIL", "").Replace("@", "");
+                                str.Add(Line.Replace("1 CHIL", "").Replace("@", "").Trim());
+                                //F.childeren= new string[] { Line.Replace("1 CHIL", "").Replace("@", "") };
                             }
+
+                           if(str.Count>=6)
+                            {
+                                FAM F1 = new FAM();
+                                 // Loop with for and use string interpolation to print values.
+                                for (int j = 0; j < str.Count; j++)
+                                {
+                                    switch(j)
+                                    {
+                                        case 0:
+                                            F1.FamID = str[j];
+                                            break;
+                                        case 1:
+                                            F1.Married = str[j];
+                                            break;
+                                        case 2:
+                                            F1.HusbandID = str[j];
+                                            break;
+                                        case 3:
+                                            F1.Wifeid = str[j];
+                                            break;
+                                        case 4:
+                                            F1.childeren = str[j];
+                                            break;
+                                        case 5:
+                                            F1.childeren= F1.childeren+ F1.childeren;
+                                            break;
+                                        case 6:
+                                            F1.childeren = F1.childeren + F1.childeren;
+                                            break;
+                                    }
+                                }
+                                Family.Add(F1);
+
+                                str = null;
+                                
+                            }
+                            /*
+                            if (F.FamID !=null )
+                            {
+                                Family.Add(F);
+                            }*/
+
                         }
                     }
                 }

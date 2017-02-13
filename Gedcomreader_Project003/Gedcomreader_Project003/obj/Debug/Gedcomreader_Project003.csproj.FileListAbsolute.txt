@@ -13,3 +13,5 @@ C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003
 C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Gedcomreader_Project003.exe
 C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Gedcomreader_Project003.pdb
 C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003\obj\Debug\Gedcomreader_Project003.csprojResolveAssemblyReference.cache
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003\obj\Debug\Gedcomreader_Project003.csproj.GenerateResource.Cache
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003\obj\Debug\Gedcomreader_Project003.DisplayLists.resources

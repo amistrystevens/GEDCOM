@@ -10,9 +10,9 @@ namespace Gedcomreader_Project003.GedcomCls
     {
 
         
-            public string FamID;
-            public string type;
-            public string IndiID;
+        public string FamID;
+        public string type;
+        public string IndiID;
         public string Married;
         public string Divorced;
         public string HusbandID;

@@ -8,12 +8,15 @@ using Gedcomreader_Project003.GedcomCls;
 using System.Collections;
 using System.Text.RegularExpressions;
 
+using System.Windows.Forms;
+
 namespace Gedcomreader_Project003
 {
   public class Program
     {
         static int tableWidth = 177;
 
+        [STAThread]
         static void Main(string[] args)
         {
             //--------------------------
@@ -185,6 +188,13 @@ namespace Gedcomreader_Project003
             PrintRow(columnsfamily);
             PrintLine();
             printFamily(Family);
+
+            Application.EnableVisualStyles();
+
+            DisplayLists form1 = new DisplayLists();
+            form1.addIndividuals(Individuals);
+            form1.addFamilies(Family);
+            Application.Run(form1);
             
             // Keep the console window open in debug mode.
             Console.WriteLine("Press any key to exit.");

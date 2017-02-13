@@ -16,17 +16,24 @@ namespace Gedcomreader_Project003
 
         static void Main(string[] args)
         {
+            //--------------------------
+            // Read Files relative to user
+            // directory in debug
+            //--------------------------
+
+            string path = (Environment.CurrentDirectory).Substring(0, Environment.CurrentDirectory.Length-9) + "TGC551.ged";
+            
             // The files used in this example are created in the topic
             // How to: Write to a Text File. You can change the path and
             // file name to substitute text files of your own.
 
-            string path = "C:\\Users\\Amit\\Desktop\\test\\TGC551.ged";
+            //string path = "C:\\Users\\Amit\\Desktop\\test\\TGC551.ged";
             //string path = "C:\\test\\sample_family.ged";
             // string path = "C:\\Users\\Amit\\Desktop\\Agile\\Amitkumar_mistry_Project002\\GED\\Amit_Mistry_Project001-BloodTree.ged";
 
             // Example #1
             // Read the file as one string.
-            string text = System.IO.File.ReadAllText(@"C:\\test\\data.txt");
+            //string text = System.IO.File.ReadAllText(@"C:\\test\\data.txt");
 
             Hashtable hs = new Hashtable();
 

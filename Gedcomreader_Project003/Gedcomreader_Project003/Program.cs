@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 namespace Gedcomreader_Project003
 {
 
-    class Program
+  public  class Program
     {
         static int tableWidth = 100;
         static void Main(string[] args)
@@ -23,7 +23,7 @@ namespace Gedcomreader_Project003
             List<FAM> customfam = new List<FAM>();
 
             //string path = "C:\\Users\\kumara\\Downloads\\TestGED\\TGC55C.ged";
-            string path = "C:\\Users\\Amit\\Desktop\\test\\TGC551.ged";
+            string path = "C:\\Users\\Amit\\Desktop\\test\\TGC55C.ged";
 
             string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
 
@@ -122,20 +122,26 @@ namespace Gedcomreader_Project003
                         }
                         else if (Line.Contains("1 MARR"))
                         {
-
+                            FAM F = new FAM();
+                            //I.BirthDay = SubNode[FindIndexinArray(SubNode, "1 MARR") + 1].Replace("2 DATE ", "").Trim();
+                            F.FamID = FamID;
+                            F.type = "MarrageDate";
+                            //F.Married = Line.Replace("2 DATE", "").Trim();
+                            F.Married = SubNode[FindIndexinArray(SubNode, "1 MARR") + 1].Replace("2 DATE ", "").Trim();
+                            Family.Add(F);
+                            checkparent = false;
                         }
-                        else if (Line.Contains("2 DATE"))
+                        else if (Line.Contains("1 DIV"))
                         {
-                            if (checkparent)
-                            {
-                                FAM F = new FAM();
-                                F.FamID = FamID;
-                                F.type = "MarrageDate";
-                                F.Married = Line.Replace("2 DATE", "").Trim();
-                                Family.Add(F);
-                                checkparent = false;
-                            }
-                        }
+                            FAM F = new FAM();
+                            //I.BirthDay = SubNode[FindIndexinArray(SubNode, "1 MARR") + 1].Replace("2 DATE ", "").Trim();
+                            F.FamID = FamID;
+                            F.type = "DivorceDate";
+                            //F.Married = Line.Replace("2 DATE", "").Trim();
+                            F.Divorced = SubNode[FindIndexinArray(SubNode, "1 DIV") + 1].Replace("2 DATE ", "").Trim();
+                            Family.Add(F);
+                            // checkparent = false;
+                        }                       
                         //if node for multi children
                         else if (Line.Contains("1 CHIL "))
                         {
@@ -170,44 +176,80 @@ namespace Gedcomreader_Project003
                 List<FAM> filteredList = Family.Where(x => x.FamID == s).ToList();
                 FAM fill = new FAM();
                 string childstr = string.Empty;
-                List<string> lst = new List<string>();
-                lst.Add(s);
+                Dictionary<string, string> lst = new Dictionary<string, string>();
+                lst.Add("Familys", s);
                 foreach (FAM obj in filteredList)
                 {
                     if (obj.Married != null)
                     {
                         //fill.Married = obj.Married;
-                        lst.Add(obj.Married);
+                        lst.Add("MARRIAGE", obj.Married);
                     }
                     else if (obj.HusbandID != null)
                     {
                         //fill.HusbandID = obj.HusbandID;
-                        lst.Add(obj.HusbandID);
+                        lst.Add("HUSBANDID", obj.HusbandID);
                     }
                     else if (obj.Wifeid != null)
                     {
                         //fill.Wifeid = obj.Wifeid;
-                        lst.Add(obj.Wifeid);
+                        lst.Add("WifeID", obj.Wifeid);
                     }
                     else if (obj.childeren != null)
                     {
                         childstr += obj.childeren;
                     }
+                    else if (obj.Divorced != null)
+                    {
+                        if (!lst.ContainsKey("Divorced"))
+                        {
+                            lst.Add("Divorced", obj.Divorced);
+                        }
+                    }
 
                 }
-                lst.Add(childstr);
+                lst.Add("childeren", childstr);
 
                 FAM newfam = new FAM();
-                if (lst.Count > 4)
+                if (lst.Count > 0)
                 {
-                    newfam.FamID = lst[0];
-                    newfam.HusbandID = lst[1];
-                    newfam.Wifeid = lst[2];
-                    newfam.Married = lst[3];
-                    newfam.childeren = lst[4];
-                    customfam.Add(newfam);
+
+                    foreach (KeyValuePair<string, string> pair in lst)
+                    {
+                        //    MessageBox.Show(pair.Key.ToString() + "  -  " + pair.Value.ToString());
+                        if (pair.Key == "Familys")
+                        {
+                            newfam.FamID = pair.Value;
+                        }
+                        else if (pair.Key == "HUSBANDID")
+                        {
+                            newfam.HusbandID = pair.Value;
+                        }
+                        else if (pair.Key == "WifeID")
+                        {
+                            newfam.Wifeid = pair.Value;
+                        }
+                        else if (pair.Key == "MARRIAGE")
+                        {
+                            newfam.Married = pair.Value;
+                        }
+                        else if (pair.Key == "childeren")
+                        {
+                            newfam.childeren = pair.Value;
+                        }
+                        else if (pair.Key == "Divorced")
+                        {
+                            newfam.Divorced = pair.Value;
+                        }
+                    }
+
+                   if (IsValidDate(newfam))
+                    {
+                        customfam.Add(newfam);
+                    }
                 }
                 newfam = null;
+                lst = null;
             }
 
 
@@ -227,6 +269,50 @@ namespace Gedcomreader_Project003
             //fill.childeren = test;
 
         }
+
+
+
+        /// <summary>
+        /// US04	Marriage before divorce	
+        /// </summary>
+        /// <param name="famObj"></param>
+        /// <returns> bool </returns>
+        /*
+         marriage date > divorce data 
+
+        - marriage date == divorce date 
+
+        - marriage date<divorce date
+
+        - marriage date but no divorce date 
+
+        - no marriage date with divorce date
+        */
+
+
+        public static bool IsValidDate(FAM famObj)
+        {
+            if (famObj.Divorced != null && famObj.Married != null)
+            {
+                DateTime mgdt = Convert.ToDateTime(famObj.Married);
+                DateTime divdt = Convert.ToDateTime(famObj.Divorced);
+                if (mgdt > divdt)
+                {
+                    return false;
+                }
+                else if (mgdt < divdt)
+                {
+                    return true;
+                }
+                else if (mgdt == divdt)
+                {
+                    return false;
+                }
+
+            }
+            return false;
+        }
+
 
 
         private static int FindIndexinArray(string[] Arr, string search)

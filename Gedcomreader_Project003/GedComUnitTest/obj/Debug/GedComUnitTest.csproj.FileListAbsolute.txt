@@ -1,0 +1,17 @@
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\xunit.abstractions.dll
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\xunit.runner.visualstudio.testadapter.dll
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\xunit.runner.utility.desktop.dll
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\xunit.execution.desktop.dll
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\GedComUnitTest.dll
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\GedComUnitTest.pdb
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\Gedcomreader_Project003.exe
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\xunit.assert.dll
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\xunit.core.dll
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\Gedcomreader_Project003.pdb
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\xunit.assert.pdb
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\xunit.assert.xml
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\xunit.core.pdb
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\xunit.core.xml
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\obj\Debug\GedComUnitTest.csprojResolveAssemblyReference.cache
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\obj\Debug\GedComUnitTest.dll
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\obj\Debug\GedComUnitTest.pdb

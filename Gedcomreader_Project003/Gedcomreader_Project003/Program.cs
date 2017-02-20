@@ -23,7 +23,14 @@ namespace Gedcomreader_Project003
             List<FAM> customfam = new List<FAM>();
 
             //string path = "C:\\Users\\kumara\\Downloads\\TestGED\\TGC55C.ged";
-            string path = "C:\\Users\\Amit\\Desktop\\test\\TGC55C.ged";
+
+            //--------------------------
+            // Read Files relative to user
+            // directory in debug
+            //--------------------------
+
+            string directory = (Environment.CurrentDirectory).Substring(0, Environment.CurrentDirectory.Length - 10);
+            string path = System.IO.Directory.GetFiles(directory, "*.ged")[0];
 
             string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
 
@@ -313,8 +320,58 @@ namespace Gedcomreader_Project003
             return false;
         }
 
+        /// <summary>
+        /// US29 List Deceased
+        /// List Displays all deceased members before the current date
+        /// </summary>
+        /// <param name="IndiList"></param>
+        /// <returns></returns>
+        public void deadBeforeDay(List<INDI> Individuals, DateTime when)
+        {
+            string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
 
+            List<INDI> deadIndi = new List<INDI>();
 
+            //Loop through and check all the death days on individuals
+            foreach (INDI i in Individuals)
+            {
+                //Skip anyone without a death day
+                if (isDeadBeforeDay(i, when) == false) 
+                {
+                    continue;
+                }
+                else 
+                {
+                    deadIndi.Add(i);
+                }
+            }
+
+            //Print the list of dead individuals
+            PrintLine();
+            PrintRow(columns);
+            PrintLine();
+
+            printIndividual(deadIndi);
+
+            Console.WriteLine("\n");
+        }
+
+        public static bool isDeadBeforeDay(INDI i, DateTime when)
+        {
+
+            //Skip anyone without a death day
+            if (i.death == null || i.death.Equals(""))
+            {
+                return false;
+            }
+            else if (when > Convert.ToDateTime(i.death))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        #region Printer Methods
         private static int FindIndexinArray(string[] Arr, string search)
         {
             int Val = -1;
@@ -381,9 +438,9 @@ namespace Gedcomreader_Project003
         }
 
     }
+    #endregion
 
-
-
+    #region COMMENTED CODE
     //public class Program
     //{
     //    static int tableWidth = 177;
@@ -433,10 +490,10 @@ namespace Gedcomreader_Project003
 
     //        //Read entire block and then plit on 0 @ for individuals and familys (no other info is needed for this instance)
     //        string[] Holder = SR.ReadToEnd().Replace("0 @", "\u0646").Split('\u0646');
-            
+
     //        string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
 
-            
+
     //        string[] columnsfamily = { "FAMILYID", "MARRID", "DIVORCED", "HUSBANDID", "HUSBANDNAME", "WIFEID", "WIFENAME", "CHILDREN" };
 
 
@@ -510,10 +567,10 @@ namespace Gedcomreader_Project003
     //                    foreach (string Line in SubNode)
     //                    {
     //                        // If node is HUSB
-                            
+
     //                        if (Line.Contains("1 HUSB"))
     //                        {
-                                
+
 
     //                            //        FAM F = new FAM();
     //                            F.FamID = FamID;
@@ -595,7 +652,7 @@ namespace Gedcomreader_Project003
     //                            Family.Add(F1);
 
     //                            str = null;
-                                
+
     //                        }
     //                        /*
     //                        if (F.FamID !=null )
@@ -619,7 +676,7 @@ namespace Gedcomreader_Project003
     //        PrintRow(columnsfamily);
     //        PrintLine();
     //        printFamily(Family);
-            
+
     //        // Keep the console window open in debug mode.
     //        Console.WriteLine("Press any key to exit.");
     //        System.Console.ReadKey();
@@ -638,7 +695,7 @@ namespace Gedcomreader_Project003
     //        return Val;
     //    }
 
-        
+
 
     //    static private void PrintLine()
     //    {
@@ -691,9 +748,10 @@ namespace Gedcomreader_Project003
     //        }
     //    }
 
-       
-       
+
+
 
 
     //}
+    #endregion
 }

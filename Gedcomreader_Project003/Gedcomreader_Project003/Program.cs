@@ -267,6 +267,7 @@ namespace Gedcomreader_Project003
             System.Console.ReadKey();
 
 
+
             //  List<FAM> child = Family.Where(x => x.FamID == s && x.type == "CHIL").ToList();
             //   string test = string.Empty;
             //foreach (FAM c in child)
@@ -325,6 +326,7 @@ namespace Gedcomreader_Project003
         /// List Displays all deceased members before the current date
         /// </summary>
         /// <param name="IndiList"></param>
+        /// <param name="when"></param>
         /// <returns></returns>
         public void deadBeforeDay(List<INDI> Individuals, DateTime when)
         {
@@ -356,6 +358,13 @@ namespace Gedcomreader_Project003
             Console.WriteLine("\n");
         }
 
+        /// <summary>
+        /// US29 List Deceased
+        /// Helper Method in Boolean Form
+        /// </summary>
+        /// <param name="IndiList"></param>
+        /// <param name="when"></param>
+        /// <returns></returns>
         public static bool isDeadBeforeDay(INDI i, DateTime when)
         {
 

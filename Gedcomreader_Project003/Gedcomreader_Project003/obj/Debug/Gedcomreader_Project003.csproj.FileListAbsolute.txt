@@ -13,3 +13,6 @@ C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003
 C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Gedcomreader_Project003.exe
 C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Gedcomreader_Project003.pdb
 C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003\obj\Debug\Gedcomreader_Project003.csprojResolveAssemblyReference.cache
+C:\test\Github2\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Gedcomreader_Project003.exe.config
+C:\test\Github2\Gedcomreader_Project003\Gedcomreader_Project003\obj\Debug\Gedcomreader_Project003.exe
+C:\test\Github2\Gedcomreader_Project003\Gedcomreader_Project003\obj\Debug\Gedcomreader_Project003.pdb

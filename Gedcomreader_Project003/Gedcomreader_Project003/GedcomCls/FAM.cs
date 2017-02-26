@@ -20,6 +20,7 @@ namespace Gedcomreader_Project003.GedcomCls
         public string Wifeid;
         public string Wifename;
         public string childeren;
+        public string Death;
 
 
     }

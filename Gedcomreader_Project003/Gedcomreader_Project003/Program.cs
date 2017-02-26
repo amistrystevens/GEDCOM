@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 namespace Gedcomreader_Project003
 {
 
-  public  class Program
+    public class Program
     {
         static int tableWidth = 100;
         static void Main(string[] args)
@@ -23,19 +23,12 @@ namespace Gedcomreader_Project003
             List<FAM> customfam = new List<FAM>();
 
             //string path = "C:\\Users\\kumara\\Downloads\\TestGED\\TGC55C.ged";
-
-            //--------------------------
-            // Read Files relative to user
-            // directory in debug
-            //--------------------------
-
-            string directory = (Environment.CurrentDirectory).Substring(0, Environment.CurrentDirectory.Length - 10);
-            string path = System.IO.Directory.GetFiles(directory, "*.ged")[0];
+            string path = "C:\\Users\\Amit\\Desktop\\test\\TGC55C.ged";
 
             string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
 
 
-            string[] columnsfamily = { "FAMILYID", "MARRID", "DIVORCED", "HUSBANDID", "HUSBANDNAME", "WIFEID", "WIFENAME", "CHILDREN" };
+            string[] columnsfamily = { "FAMILYID", "MARRID", "DIVORCED", "DEATH", "HUSBANDID", "HUSBANDNAME", "WIFEID", "WIFENAME", "CHILDREN" };
 
 
             //Open path to GED file
@@ -138,6 +131,17 @@ namespace Gedcomreader_Project003
                             Family.Add(F);
                             checkparent = false;
                         }
+                        else if (Line.Contains("1 DEAT"))
+                        {
+                            FAM F = new FAM();
+                            //I.BirthDay = SubNode[FindIndexinArray(SubNode, "1 MARR") + 1].Replace("2 DATE ", "").Trim();
+                            F.FamID = FamID;
+                            F.type = "DeathDate";
+                            //F.Married = Line.Replace("2 DATE", "").Trim();
+                            F.Death = SubNode[FindIndexinArray(SubNode, "1 DEAT") + 1].Replace("2 DATE ", "").Trim();
+                            Family.Add(F);
+                            // checkparent = false;
+                        }
                         else if (Line.Contains("1 DIV"))
                         {
                             FAM F = new FAM();
@@ -148,7 +152,7 @@ namespace Gedcomreader_Project003
                             F.Divorced = SubNode[FindIndexinArray(SubNode, "1 DIV") + 1].Replace("2 DATE ", "").Trim();
                             Family.Add(F);
                             // checkparent = false;
-                        }                       
+                        }
                         //if node for multi children
                         else if (Line.Contains("1 CHIL "))
                         {
@@ -213,6 +217,14 @@ namespace Gedcomreader_Project003
                             lst.Add("Divorced", obj.Divorced);
                         }
                     }
+                    else if (obj.Death != null)
+                    {
+                        // if (!lst.ContainsKey("Divorced"))
+                        {
+                            lst.Add("Death", obj.Death);
+                        }
+
+                    }
 
                 }
                 lst.Add("childeren", childstr);
@@ -248,12 +260,24 @@ namespace Gedcomreader_Project003
                         {
                             newfam.Divorced = pair.Value;
                         }
+                        else if (pair.Key == "Death")
+                        {
+                            newfam.Death = pair.Value;
+                        }
                     }
 
-                   if (IsValidDate(newfam))
+                    if (IsValidDateforMarriageDeath(newfam))
                     {
                         customfam.Add(newfam);
                     }
+
+                    /*
+                    if (IsValidDate(newfam))
+                     {
+                         customfam.Add(newfam);
+                     }
+                     */
+
                 }
                 newfam = null;
                 lst = null;
@@ -267,7 +291,6 @@ namespace Gedcomreader_Project003
             System.Console.ReadKey();
 
 
-
             //  List<FAM> child = Family.Where(x => x.FamID == s && x.type == "CHIL").ToList();
             //   string test = string.Empty;
             //foreach (FAM c in child)
@@ -278,6 +301,47 @@ namespace Gedcomreader_Project003
 
         }
 
+
+        /// <summary>
+        /// US05	Marriage before death	am
+        /// </summary>
+        /// <param name="famObj"></param>
+        /// <returns> bool </returns>
+        /*
+         marriage date > death date 
+
+        - marriage date == death date 
+
+        - marriage date<death date
+
+        - marriage date but no death date 
+
+        - no marriage date with death date
+        */
+
+
+        public static bool IsValidDateforMarriageDeath(FAM famObj)
+        {
+            if (famObj.Death != null && famObj.Married != null)
+            {
+                DateTime mgdt = Convert.ToDateTime(famObj.Married);
+                DateTime deathdt = Convert.ToDateTime(famObj.Death);
+                if (mgdt > deathdt)
+                {
+                    return false;
+                }
+                else if (mgdt < deathdt)
+                {
+                    return true;
+                }
+                else if (mgdt == deathdt)
+                {
+                    return false;
+                }
+
+            }
+            return false;
+        }
 
 
         /// <summary>
@@ -321,66 +385,8 @@ namespace Gedcomreader_Project003
             return false;
         }
 
-        /// <summary>
-        /// US29 List Deceased
-        /// List Displays all deceased members before the current date
-        /// </summary>
-        /// <param name="IndiList"></param>
-        /// <param name="when"></param>
-        /// <returns></returns>
-        public void deadBeforeDay(List<INDI> Individuals, DateTime when)
-        {
-            string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
 
-            List<INDI> deadIndi = new List<INDI>();
 
-            //Loop through and check all the death days on individuals
-            foreach (INDI i in Individuals)
-            {
-                //Skip anyone without a death day
-                if (isDeadBeforeDay(i, when) == false) 
-                {
-                    continue;
-                }
-                else 
-                {
-                    deadIndi.Add(i);
-                }
-            }
-
-            //Print the list of dead individuals
-            PrintLine();
-            PrintRow(columns);
-            PrintLine();
-
-            printIndividual(deadIndi);
-
-            Console.WriteLine("\n");
-        }
-
-        /// <summary>
-        /// US29 List Deceased
-        /// Helper Method in Boolean Form
-        /// </summary>
-        /// <param name="IndiList"></param>
-        /// <param name="when"></param>
-        /// <returns></returns>
-        public static bool isDeadBeforeDay(INDI i, DateTime when)
-        {
-
-            //Skip anyone without a death day
-            if (i.death == null || i.death.Equals(""))
-            {
-                return false;
-            }
-            else if (when > Convert.ToDateTime(i.death))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        #region Printer Methods
         private static int FindIndexinArray(string[] Arr, string search)
         {
             int Val = -1;
@@ -400,7 +406,7 @@ namespace Gedcomreader_Project003
         {
             foreach (INDI l in lst)
             {
-                Console.WriteLine("{0,-5} {1,-10} {2,-30} {3,-34} {4,-40} {5,-50} {6,-60} {7,-70} {8,-80}", l.ID, l.Name, l.Sex, l.BirthDay, l.age, l.Alive, l.death, l.Child, l.spouse);
+                Console.WriteLine("{0,-5}{1,-10}{2,-30}{3,-34}{4,-40}{5,-50}{6,-60}{7,-70}{8,-80}", l.ID, l.Name, l.Sex, l.BirthDay, l.age, l.Alive, l.death, l.Child, l.spouse);
                 PrintLine();
             }
         }
@@ -409,8 +415,8 @@ namespace Gedcomreader_Project003
         {
             foreach (FAM f in lst)
             {
-                Console.WriteLine("{0,-15}{1,-20}{2,-30}{3,-35}{4,-40}{5,-42}{6,-43} {7,-50}",
-                    f.FamID, f.Married, f.Divorced, f.HusbandID, f.Husbandname, f.Wifeid, f.Wifename, f.childeren);
+                Console.WriteLine("{0,-15}{1,-20}{2,-30}{3,-35}{4,-40}{5,-42}{6,-43}{7,-45}{8,-47}",
+                    f.FamID, f.Married, f.Divorced, f.Death, f.HusbandID, f.Husbandname, f.Wifeid, f.Wifename, f.childeren);
             }
         }
 
@@ -447,7 +453,8 @@ namespace Gedcomreader_Project003
         }
 
     }
-    #endregion
+
+
 
     #region COMMENTED CODE
     //public class Program

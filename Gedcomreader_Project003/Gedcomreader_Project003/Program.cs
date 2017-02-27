@@ -386,7 +386,193 @@ namespace Gedcomreader_Project003
         }
 
 
+        /// <summary>
+        /// US29 List Deceased
+        /// List Displays all deceased members before the current date
+        /// </summary>
+        /// <param name="IndiList"></param>
+        /// <param name="when"></param>
+        /// <returns></returns>
+        public void deadBeforeDay(List<INDI> Individuals, DateTime when)
+        {
+            string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
 
+            List<INDI> deadIndi = new List<INDI>();
+
+            //Loop through and check all the death days on individuals
+            foreach (INDI i in Individuals)
+            {
+                //Skip anyone without a death day
+                if (isDeadBeforeDay(i, when) == false)
+                {
+                    continue;
+                }
+                else
+                {
+                    deadIndi.Add(i);
+                }
+            }
+
+            //Print the list of dead individuals
+            PrintLine();
+            PrintRow(columns);
+            PrintLine();
+
+            printIndividual(deadIndi);
+
+            Console.WriteLine("\n");
+        }
+
+        /// <summary>
+        /// US29 List Deceased
+        /// Helper Method in Boolean Form
+        /// </summary>
+        /// <param name="IndiList"></param>
+        /// <param name="when"></param>
+        /// <returns></returns>
+        public static bool isDeadBeforeDay(INDI i, DateTime when)
+        {
+
+            //Skip anyone without a death day
+            if (i.death == null || i.death.Equals(""))
+            {
+                return false;
+            }
+            else if (when > Convert.ToDateTime(i.death))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// US01 List Dates before date
+        /// List all Individuals and Families who have a date before this date
+        /// </summary>
+        /// <param name="IndiList"></param>
+        /// <param name="when"></param>
+        /// <returns></returns>
+        public void DatesBeforeToday(List<INDI> Individuals, List<FAM> Families)
+        {
+            string[] columnsIndviduals = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
+            string[] columnsFamily = { "FAMILYID", "MARRID", "DIVORCED", "DEATH", "HUSBANDID", "HUSBANDNAME", "WIFEID", "WIFENAME", "CHILDREN" };
+
+            List<INDI> IndiWithDates = new List<INDI>();
+            List<FAM> FamilyWithDates = new List<FAM>();
+
+            INDI currentIndi = new INDI() ;
+            bool changed = false;
+            //Loop through and check all the death days on individuals
+            for (int i = 0; i< Individuals.Count(); i++) 
+            {
+                currentIndi = Individuals[i];
+                changed = isDateAfterTodayIndi(ref currentIndi);
+                if (changed)
+                    IndiWithDates.Add(currentIndi);
+            }
+
+            //Print the list of changed individuals
+            PrintLine();
+            PrintRow(columnsIndviduals);
+            PrintLine();
+
+            printIndividual(IndiWithDates);
+
+            Console.WriteLine("\n");
+
+            //Loop through all Families now
+            changed = false;
+            FAM currentFam = new FAM();
+            for (int i = 0; i < Families.Count(); i++)
+            {
+                currentFam = Families[i];
+                changed = isDateAfterTodayFam(ref currentFam);
+                if (changed)
+                    FamilyWithDates.Add(currentFam);
+            }
+
+            //Print the list of changed families
+            PrintLine();
+            PrintRow(columnsFamily);
+            PrintLine();
+
+            printFamily(FamilyWithDates);
+
+            Console.WriteLine("\n");
+        }
+
+        /// <summary>
+        /// US01 List Date before Current Day
+        /// Helper Method in Boolean Form
+        /// </summary>
+        /// <param name="IndiList"></param>
+        /// <param name="when"></param>
+        /// <returns></returns>
+        public static bool isDateAfterTodayIndi(ref INDI i)
+        {
+            bool changed = false;
+            DateTime today = DateTime.Today;
+
+            //Skip anyone without a death day
+            if (i.death == null || i.death.Equals(""))
+            {
+                changed = false;
+            }
+            else if (today < Convert.ToDateTime(i.death))
+            {
+                i.death = "";
+                changed = true;
+                i.Dead = false;
+            }
+            if (i.BirthDay == null || i.BirthDay.Equals(""))
+            {
+                changed = false;
+            }
+            else if(today < Convert.ToDateTime(i.BirthDay))
+            {
+                i.BirthDay = "";
+                changed = true;
+            }
+           
+            return changed;
+        }
+
+        /// <summary>
+        /// US01 List Date before Current Day
+        /// Helper Method in Boolean Form
+        /// </summary>
+        /// <param name="IndiList"></param>
+        /// <param name="when"></param>
+        /// <returns></returns>
+        public static bool isDateAfterTodayFam(ref FAM f)
+        {
+            bool changed = false;
+            DateTime today = DateTime.Today;
+
+            //Skip anyone without a death day
+            if (f.Married == null || f.Married.Equals(""))
+            {
+                changed = false;
+            }
+            else if (today < Convert.ToDateTime(f.Married))
+            {
+                f.Married = "";
+                changed = true;
+            }
+            if (f.Divorced == null || f.Divorced.Equals(""))
+            {
+                changed = false;
+            }
+            else if (today < Convert.ToDateTime(f.Divorced))
+            {
+                f.Divorced = "";
+                changed = true;
+            }
+
+            return changed;
+        }
+
+        #region Printer Methods
         private static int FindIndexinArray(string[] Arr, string search)
         {
             int Val = -1;
@@ -399,8 +585,6 @@ namespace Gedcomreader_Project003
             }
             return Val;
         }
-
-
 
         static private void printIndividual(List<INDI> lst)
         {
@@ -453,7 +637,7 @@ namespace Gedcomreader_Project003
         }
 
     }
-
+    #endregion
 
 
     #region COMMENTED CODE

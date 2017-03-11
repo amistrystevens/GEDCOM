@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="sample_family.ged" />
     <None Include="TGC551.ged" />
   </ItemGroup>
   <ItemGroup />

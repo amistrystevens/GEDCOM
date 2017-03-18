@@ -7,6 +7,7 @@ using System.IO;
 using Gedcomreader_Project003.GedcomCls;
 using System.Collections;
 using System.Text.RegularExpressions;
+using Datelib;
 
 namespace Gedcomreader_Project003
 {
@@ -25,7 +26,7 @@ namespace Gedcomreader_Project003
 
             // string path = "C:\\Users\\kumara\\Downloads\\TestGED\\TGC55C.ged";
 
-
+            double days, months, years;
 
             // string path = "C:\\test\\sample_family.ged";
 
@@ -100,8 +101,11 @@ namespace Gedcomreader_Project003
                             //convert Y or N to true or false ( defaults to False so no need to change unless Y is found.
                             // var deathdt = SubNode[i].Replace("2 DEAT ", "").Trim();
                             indiObj.death = SubNode[i].Replace("2 DATE ", "").Trim();
-                            indiObj.Dead = true;
+                            indiObj.Dead = false;
 
+                            CustomDates.calcuateDayMonthsYears(Convert.ToDateTime(indiObj.BirthDay), (string.IsNullOrEmpty(indiObj.death) ? System.DateTime.Now : Convert.ToDateTime(indiObj.death)), out days, out months, out years);
+
+                            indiObj.age = Convert.ToInt16(years);
                             //set death
                             //var Dead = true;
 
@@ -239,12 +243,61 @@ namespace Gedcomreader_Project003
                 }
             }
 
+
+            //------------- US
+
+            int sonAge;
+            int fatherAge;
+            int motherAge;
+            foreach(FAM fam in Family)
+            {
+                var childeren = fam.childeren;
+                string mychildern=  childeren.Trim(new Char[] { ' ', ',' });
+                string[] child = mychildern.Split(',');
+                
+                 fatherAge = Individuals.Where(ind => ind.ID == fam.HusbandID).SingleOrDefault().age;
+                 motherAge = Individuals.Where(ind => ind.ID == fam.Wifeid).SingleOrDefault().age;
+
+                for (int i= 0;i<child.Length;i++)
+                {
+                    sonAge = Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().age;
+
+                   if(CompareAge(sonAge,fatherAge,motherAge))
+                    {
+                        Console.WriteLine("ERROR: FAMILY : US12 : father is too old" );
+                    }
+
+                }
+            }
+
             // Keep the console window open in debug mode.
             Console.WriteLine("\n\n\n\n\n\n\nPress any key to exit.");
             System.Console.ReadKey();
 
 
         }
+
+        //US12: The description in column C explains that US12, parents too old, 
+        //occurs when the father’s age – child’s age >= 80 or mother’s age – child’s age >= 60 
+
+
+        public static bool CompareAge(int sage,int fage,int mage)
+        {
+            return (fage - sage >= 80 || mage - sage >= 60) ? true : false; 
+        }
+
+        /*
+        US14: US14 occurs when the number of children born on a single day > 6. 
+        You can ignore the boundary condition where siblings are born across two consecutive days, 
+        e.g.sibling 1 born at 11:59PM and sibling 2 born at 12:01AM the next day.Just count the number of children born each birthday within 
+        a family and generate a warning if > 5 
+        */
+
+
+
+
+
+
 
         public static bool IsValidDateforMarriageBeforeDeath(INDI ind, FAM fil)
         {
@@ -580,10 +633,12 @@ namespace Gedcomreader_Project003
 
         static private void printIndividual(List<INDI> lst)
         {
+            //double days = 0, months = 0, years = 0;
             foreach (INDI l in lst)
             {
+                //CustomDates.calcuateDayMonthsYears( Convert.ToDateTime(l.BirthDay), ( string.IsNullOrEmpty(l.death)?System.DateTime.Now : Convert.ToDateTime(l.death)), out days, out months,out years);
                 Console.WriteLine("{0,7}{1,14}{2,7}{3,17}{4,5}{5,10}{6,15}{7,17}{8,8}",
-                                   l.ID, l.Name, l.Sex, l.BirthDay, l.age, l.Alive, l.death, l.Child, l.spouse);
+                                   l.ID, l.Name, l.Sex, l.BirthDay, l.age , l.Dead, l.death, l.Child, l.spouse);
                 PrintLine();
             }
         }

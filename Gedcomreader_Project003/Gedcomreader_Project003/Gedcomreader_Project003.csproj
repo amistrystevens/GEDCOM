@@ -55,7 +55,12 @@
     <None Include="sample_family.ged" />
     <None Include="TGC551.ged" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Datelib\Datelib.csproj">
+      <Project>{e36b8f4d-f3e5-4160-9fe6-5fd8364bc406}</Project>
+      <Name>Datelib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

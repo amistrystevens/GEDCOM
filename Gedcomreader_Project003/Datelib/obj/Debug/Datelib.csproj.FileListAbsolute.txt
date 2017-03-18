@@ -1,0 +1,5 @@
+C:\Github_3_11\Gedcomreader_Project003\Datelib\bin\Debug\Datelib.dll
+C:\Github_3_11\Gedcomreader_Project003\Datelib\bin\Debug\Datelib.pdb
+C:\Github_3_11\Gedcomreader_Project003\Datelib\obj\Debug\Datelib.csprojResolveAssemblyReference.cache
+C:\Github_3_11\Gedcomreader_Project003\Datelib\obj\Debug\Datelib.dll
+C:\Github_3_11\Gedcomreader_Project003\Datelib\obj\Debug\Datelib.pdb

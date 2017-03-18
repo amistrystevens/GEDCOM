@@ -12,7 +12,7 @@ namespace Gedcomreader_Project003.GedcomCls
         public string Name;
         public string Sex;
         public string BirthDay;
-        public bool Dead;
+        public bool Dead { get; set; } = true;
         public int age;
         public bool Alive;
         public string death;

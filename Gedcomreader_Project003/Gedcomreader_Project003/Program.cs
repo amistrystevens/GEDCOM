@@ -341,7 +341,7 @@ namespace Gedcomreader_Project003
 
                 foreach (var c in counts)
                 {
-                    if (c.Value > 5)
+                    if (c.Value > 6)
                     {
                         bmultibirth = true;                     
                         break;

@@ -284,7 +284,7 @@ namespace Gedcomreader_Project003
 
                    if(CompareAge(sonAge,fatherAge,motherAge))
                     {
-                        Console.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father  is too old" );
+                        Console.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father("+ fam.HusbandID +") age ("+fatherAge+") or mother("+fam.Wifeid+") age ("+ motherAge + ") is  older than child ("+child[i] +")");
                         break;
                     }                   
 
@@ -299,7 +299,7 @@ namespace Gedcomreader_Project003
 
                 if (IsMultipleBirth(birthday))
                 {
-                    Console.WriteLine("ERROR: FAMILY : US15 : "+  fam.FamID +"  Mulitple birth");
+                    Console.WriteLine("ERROR: FAMILY : US15 : Family "+  fam.FamID + " has "+ birthday.Count + " siblings ");
                 }           
                 
 
@@ -320,7 +320,7 @@ namespace Gedcomreader_Project003
 
         public static bool CompareAge(int sage,int fage,int mage)
         {
-            return (fage - sage >= 80 || mage - sage >= 60) ? true : false; 
+            return (fage - sage >= 80 || mage - sage >= 10) ? true : false; 
         }
 
         /*

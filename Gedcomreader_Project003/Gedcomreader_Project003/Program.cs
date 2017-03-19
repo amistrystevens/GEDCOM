@@ -320,7 +320,7 @@ namespace Gedcomreader_Project003
 
         public static bool CompareAge(int sage,int fage,int mage)
         {
-            return (fage - sage >= 80 || mage - sage >= 10) ? true : false; 
+            return (fage - sage >= 80 || mage - sage >= 60) ? true : false; 
         }
 
         /*

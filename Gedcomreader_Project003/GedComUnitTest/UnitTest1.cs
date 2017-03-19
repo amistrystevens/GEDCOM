@@ -4,9 +4,12 @@ using Xunit;
 
 using Gedcomreader_Project003.GedcomCls;
 using Gedcomreader_Project003.Utilities;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace GedComUnitTest
 {
+
     public class UnitTest1
     {
         [Fact]
@@ -297,4 +300,26 @@ namespace GedComUnitTest
 
     }
 
+
+    public class  UnitTestUsersStory_12_15
+     {
+
+        [Fact]
+        public void compageAgeTest()
+        {
+            bool actual = Gedcomreader_Project003.Program.CompareAge(18, 100, 80);
+            Assert.Equal(true, actual);
+        }
+
+        [Fact]
+        public void IsMultipleBirthTest()
+        {
+            List<int> birthday = new List<int>();            
+            birthday=  Enumerable.Repeat(5,7).ToList();
+            bool actual = Gedcomreader_Project003.Program.IsMultipleBirth(birthday);
+            Assert.Equal(true, actual);
+        }
+
+     }
+    
 }

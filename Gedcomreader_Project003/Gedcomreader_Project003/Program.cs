@@ -109,6 +109,14 @@ namespace Gedcomreader_Project003
                             //set death
                             //var Dead = true;
 
+                        }else
+                        {
+                            i=i-2;
+                            CustomDates.calcuateDayMonthsYears(Convert.ToDateTime(indiObj.BirthDay), (string.IsNullOrEmpty(indiObj.death) ? System.DateTime.Now : Convert.ToDateTime(indiObj.death)), out days, out months, out years);
+
+                            indiObj.age = Convert.ToInt16(years);
+
+
                         }
 
 
@@ -174,14 +182,20 @@ namespace Gedcomreader_Project003
                         {
                             famObj.Wifeid = SubNode[i].Replace("1 WIFE", "").Trim();
                         }
-
+                        i++;
                         string str = string.Empty;
-                        while (SubNode[++i].Contains("CHIL"))
+                        while (i!= SubNode.Length)
                         {
-                            if (SubNode[i].Contains("CHIL"))
+                            if (SubNode[i].Contains("CHIL") )
                             {
                                 str = str + "," + SubNode[i].Replace("1 CHIL", "").Trim();
+                                i++;
                             }
+                            else
+                            {
+                                break;
+                            }
+
                         }
 
                         if (str != string.Empty)
@@ -215,7 +229,10 @@ namespace Gedcomreader_Project003
 
             printFamily(Family);
 
-            Console.WriteLine("\n\n\n\n List of Errors");
+            Console.WriteLine("\t\t List of Errors");
+
+            Console.WriteLine("\t\t\t\t\tsprint1 : Users stories 3,5  ");
+            Console.WriteLine("\t\t\t\t\t------------------------------\n ");
 
 
             foreach (FAM fam in Family)
@@ -232,9 +249,7 @@ namespace Gedcomreader_Project003
 
             }
 
-
-            Console.Write("\n");
-
+            
             foreach (FAM fam in Family)
             {
                 if (!IsValidDateforMarriageBeforeDivorce(fam))
@@ -244,11 +259,16 @@ namespace Gedcomreader_Project003
             }
 
 
-            //------------- US
+            //------------- US 12 and US 15
+            Console.Write("\n");
+            Console.WriteLine("\t\t\t\t\tSprint2 : Users stories 12,15  ");
+            Console.WriteLine("\t\t\t\t\t------------------------------\n");
+
 
             int sonAge;
             int fatherAge;
             int motherAge;
+            List<int> birthday = new List<int>();
             foreach(FAM fam in Family)
             {
                 var childeren = fam.childeren;
@@ -260,18 +280,35 @@ namespace Gedcomreader_Project003
 
                 for (int i= 0;i<child.Length;i++)
                 {
-                    sonAge = Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().age;
+                   sonAge = Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().age;
 
                    if(CompareAge(sonAge,fatherAge,motherAge))
                     {
-                        Console.WriteLine("ERROR: FAMILY : US12 : father is too old" );
-                    }
+                        Console.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father  is too old" );
+                        break;
+                    }                   
 
                 }
+
+
+                for (int i = 0; i < child.Length; i++)
+                {
+                     birthday.Add(Convert.ToDateTime(Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().BirthDay).Day);                    
+                }
+
+
+                if (IsMultipleBirth(birthday))
+                {
+                    Console.WriteLine("ERROR: FAMILY : US15 : "+  fam.FamID +"  Mulitple birth");
+                }           
+                
+
             }
 
+            
+
             // Keep the console window open in debug mode.
-            Console.WriteLine("\n\n\n\n\n\n\nPress any key to exit.");
+            Console.WriteLine("\n\n\n\nPress any key to exit.");
             System.Console.ReadKey();
 
 
@@ -293,7 +330,27 @@ namespace Gedcomreader_Project003
         a family and generate a warning if > 5 
         */
 
+        public static bool IsMultipleBirth( List<int> birthday)
+        {
+            bool bmultibirth=false;
 
+            Dictionary<int, int> counts = birthday.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
+
+            if (counts.Count > 0)
+            {
+
+                foreach (var c in counts)
+                {
+                    if (c.Value > 5)
+                    {
+                        bmultibirth = true;                     
+                        break;
+                    }
+                }
+            }
+
+            return bmultibirth;
+        }
 
 
 

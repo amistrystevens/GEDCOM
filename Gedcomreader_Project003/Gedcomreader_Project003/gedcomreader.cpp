@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <typeinfo>
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/ui/text/TestRunner.h> 
@@ -85,7 +86,6 @@ void checkBirthMarraige()
 		if(words[2] == "INDI")
 			{
 				name.push_back(words[1]);
-				cout<< "ADD PER" << endl;
 				last="INDI";
 			}
 		if(words[1] == "MARR")
@@ -103,19 +103,16 @@ void checkBirthMarraige()
 			{
 				a = words[2]+words[3]+words[4];
 				born.push_back(a);
-				cout << "BORN" << endl;
 			}
 			if(last =="MARR")
 			{
 				a = words[2]+words[3]+words[4];
 				marr.push_back(a);
-				cout << "MARR" << endl;
 			}
 			if(last =="DEAT")
 			{
 				a = words[2]+words[3]+words[4];
 				deat.push_back(a);
-				cout << "DEAT" << endl;
 			}
 			last="";
 		}
@@ -128,11 +125,21 @@ void checkBirthMarraige()
 	{
 		if(born[i] > marr[i])
 			cout << name[i] << "is not correct <MARRAIGE>" << endl;
+		if(stoi(born[i].substr(born[i].length()-4,born[i].length()-1))+14 < stoi(marr[i].substr(marr[i].length()-4,marr[i].length()-1)))
+			cout << name[i] << "is not correct <Not old enough>" << endl;
 	}
 	for(int i=0; i<deat.size();i++)
 	{
 		if(born[i] > deat[i])
 			cout << name[i] << "is not correct <DEATH>" << endl;
+	}
+	for(int i=0; i<marr.size();i++)
+	{
+		for(int j=i; j<marr.size();j++)
+		{
+			if(name[i] == name[j])
+				cout << name[i] << " has married more than once" << endl;
+		}
 	}
 
 }

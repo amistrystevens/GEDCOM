@@ -30,7 +30,7 @@ namespace Gedcomreader_Project003
 
             // string path = "C:\\test\\sample_family.ged";
 
-            string path = "C:\\Users\\Amit\\Desktop\\test\\sample_family.ged";
+            string path = "C:\\Users\\Class2017\\Documents\\A Stuff\\SSW 555\Project06\\sample_family.ged";
 
             string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
 
@@ -265,11 +265,11 @@ namespace Gedcomreader_Project003
             Console.WriteLine("\t\t\t\t\tsprint1 : Users stories 1,29  ");
             Console.WriteLine("\t\t\t\t\t------------------------------\n ");
 
-            datesBeforeToday(Individuals, Family);
+            //datesBeforeToday(Individuals, Family);
 
             DateTime day = new DateTime(1996, 3, 24);
 
-            deadBeforeDay(Individuals, day);
+            //deadBeforeDay(Individuals, day);
 
             //------------- US 12 and US 15
             Console.Write("\n");

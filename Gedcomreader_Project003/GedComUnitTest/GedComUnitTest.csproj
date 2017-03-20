@@ -64,6 +64,7 @@
     <Compile Include="ListDeceasedTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="US06_07Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -9,7 +9,6 @@ using System.Collections;
 
 namespace GedComUnitTest
 {
-
     public class UnitTest1
     {
         [Fact]
@@ -300,9 +299,8 @@ namespace GedComUnitTest
 
     }
 
-
-    public class  UnitTestUsersStory_12_15
-     {
+    public class UnitTestUsersStory_12_15
+    {
 
         [Fact]
         public void compageAgeTest()
@@ -314,12 +312,14 @@ namespace GedComUnitTest
         [Fact]
         public void IsMultipleBirthTest()
         {
-            List<int> birthday = new List<int>();            
-            birthday=  Enumerable.Repeat(5,7).ToList();
+            List<int> birthday = new List<int>();
+            birthday = Enumerable.Repeat(5, 7).ToList();
             bool actual = Gedcomreader_Project003.Program.IsMultipleBirth(birthday);
             Assert.Equal(true, actual);
         }
 
-     }
-    
+    }
+
 }
+
+

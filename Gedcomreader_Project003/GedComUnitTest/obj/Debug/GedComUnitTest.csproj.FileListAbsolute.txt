@@ -32,3 +32,5 @@ C:\Github_3_11\Gedcomreader_Project003\GedComUnitTest\bin\Debug\xunit.core.xml
 C:\Github_3_11\Gedcomreader_Project003\GedComUnitTest\obj\Debug\GedComUnitTest.csprojResolveAssemblyReference.cache
 C:\Github_3_11\Gedcomreader_Project003\GedComUnitTest\obj\Debug\GedComUnitTest.dll
 C:\Github_3_11\Gedcomreader_Project003\GedComUnitTest\obj\Debug\GedComUnitTest.pdb
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\Datelib.dll
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\GedComUnitTest\bin\Debug\Datelib.pdb

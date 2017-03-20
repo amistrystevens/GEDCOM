@@ -258,6 +258,18 @@ namespace Gedcomreader_Project003
                 }
             }
 
+            //------------- US 1 and US 29
+
+            Console.WriteLine("\t\t List of Errors");
+
+            Console.WriteLine("\t\t\t\t\tsprint1 : Users stories 1,29  ");
+            Console.WriteLine("\t\t\t\t\t------------------------------\n ");
+
+            datesBeforeToday(Individuals, Family);
+
+            DateTime day = new DateTime(1996, 3, 24);
+
+            deadBeforeDay(Individuals, day);
 
             //------------- US 12 and US 15
             Console.Write("\n");
@@ -269,41 +281,62 @@ namespace Gedcomreader_Project003
             int fatherAge;
             int motherAge;
             List<int> birthday = new List<int>();
-            foreach(FAM fam in Family)
+            foreach (FAM fam in Family)
             {
                 var childeren = fam.childeren;
-                string mychildern=  childeren.Trim(new Char[] { ' ', ',' });
+                string mychildern = childeren.Trim(new Char[] { ' ', ',' });
                 string[] child = mychildern.Split(',');
-                
-                 fatherAge = Individuals.Where(ind => ind.ID == fam.HusbandID).SingleOrDefault().age;
-                 motherAge = Individuals.Where(ind => ind.ID == fam.Wifeid).SingleOrDefault().age;
 
-                for (int i= 0;i<child.Length;i++)
+                fatherAge = Individuals.Where(ind => ind.ID == fam.HusbandID).SingleOrDefault().age;
+                motherAge = Individuals.Where(ind => ind.ID == fam.Wifeid).SingleOrDefault().age;
+
+                for (int i = 0; i < child.Length; i++)
                 {
-                   sonAge = Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().age;
+                    sonAge = Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().age;
 
-                   if(CompareAge(sonAge,fatherAge,motherAge))
+                    if (CompareAge(sonAge, fatherAge, motherAge))
                     {
-                        Console.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father("+ fam.HusbandID +") age ("+fatherAge+") or mother("+fam.Wifeid+") age ("+ motherAge + ") is  older than child ("+child[i] +")");
+                        Console.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father(" + fam.HusbandID + ") age (" + fatherAge + ") or mother(" + fam.Wifeid + ") age (" + motherAge + ") is  older than child (" + child[i] + ")");
                         break;
-                    }                   
+                    }
 
                 }
 
 
                 for (int i = 0; i < child.Length; i++)
                 {
-                     birthday.Add(Convert.ToDateTime(Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().BirthDay).Day);                    
+                    birthday.Add(Convert.ToDateTime(Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().BirthDay).Day);
                 }
 
 
                 if (IsMultipleBirth(birthday))
                 {
-                    Console.WriteLine("ERROR: FAMILY : US15 : Family "+  fam.FamID + " has "+ birthday.Count + " siblings ");
-                }           
-                
+                    Console.WriteLine("ERROR: FAMILY : US15 : Family " + fam.FamID + " has " + birthday.Count + " siblings ");
+                }
 
             }
+
+            //------------- US 06 and US 07
+            Console.Write("\n");
+            Console.WriteLine("\t\t\t\t\tSprint2 : Users stories 12,15  ");
+            Console.WriteLine("\t\t\t\t\t------------------------------\n");
+
+            foreach (FAM fam in Family)
+            {
+                if (!IsValidDateforMarriageBeforeDivorce(fam))
+                {
+                    Console.WriteLine("ERROR: FAMILY : US5 : " + fam.FamID + ": Died on" + fam.Death + " before Divorced " + fam.Divorced);
+                }
+            }
+
+            foreach (INDI indi in Individuals)
+            {
+                if(isTooOld(indi))
+                {
+                    Console.WriteLine("ERROR: INDIVIDUAL : US07 : Family " + indi.ID + " has Birth" + indi.BirthDay + " and Death " + indi.death);
+                }
+            }
+            
 
             
 
@@ -495,7 +528,7 @@ namespace Gedcomreader_Project003
         /// <param name="IndiList"></param>
         /// <param name="when"></param>
         /// <returns></returns>
-        public void deadBeforeDay(List<INDI> Individuals, DateTime when)
+        public static void deadBeforeDay(List<INDI> Individuals, DateTime when)
         {
             string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
 
@@ -516,6 +549,8 @@ namespace Gedcomreader_Project003
             }
 
             //Print the list of dead individuals
+            PrintLine();
+            Console.WriteLine("DEAD INDIVIDUALS BEFORE GIVEN DATE: " + when.ToString());
             PrintLine();
             PrintRow(columns);
             PrintLine();
@@ -554,7 +589,7 @@ namespace Gedcomreader_Project003
         /// <param name="IndiList"></param>
         /// <param name="when"></param>
         /// <returns></returns>
-        public void DatesBeforeToday(List<INDI> Individuals, List<FAM> Families)
+        public static void datesBeforeToday(List<INDI> Individuals, List<FAM> Families)
         {
             string[] columnsIndviduals = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
             string[] columnsFamily = { "FAMILYID", "MARRID", "DIVORCED", "DEATH", "HUSBANDID", "HUSBANDNAME", "WIFEID", "WIFENAME", "CHILDREN" };
@@ -575,6 +610,9 @@ namespace Gedcomreader_Project003
 
             //Print the list of changed individuals
             PrintLine();
+            Console.WriteLine("INDIVIDUALS WITH DATES BEFORE CURRENT DATE: " +DateTime.Today.ToString());
+            PrintLine();
+            PrintLine();
             PrintRow(columnsIndviduals);
             PrintLine();
 
@@ -594,6 +632,9 @@ namespace Gedcomreader_Project003
             }
 
             //Print the list of changed families
+            PrintLine();
+            Console.WriteLine("FAMILIES WITH DATES BEFORE CURRENT DATE: " + DateTime.Today.ToString());
+            PrintLine();
             PrintLine();
             PrintRow(columnsFamily);
             PrintLine();
@@ -672,6 +713,54 @@ namespace Gedcomreader_Project003
             }
 
             return changed;
+        }
+
+        /// <summary>
+        /// US06	Divorce before death	
+        /// </summary>
+        /// <param name="famObj"></param>
+        /// <returns> bool </returns>
+        public static bool IsValidDateforDivorceBeforeDeath(FAM famObj)
+        {
+            if (famObj.Divorced != null && famObj.Death != null)
+            {
+                DateTime divorceddt = Convert.ToDateTime(famObj.Divorced);
+                DateTime deathdt = Convert.ToDateTime(famObj.Death);
+                if (deathdt <= divorceddt)
+                {
+                    return false;
+                }
+                else if (deathdt > divorceddt)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// US07	Less than 150 Years Old
+        /// </summary>
+        /// <param name="famObj"></param>
+        /// <returns> bool </returns>
+        public static bool isTooOld(INDI indi)
+        {
+            //Check first if the user is dead
+            if (indi.BirthDay != null && indi.death != null)
+            {
+                DateTime birthdt = Convert.ToDateTime(indi.BirthDay);
+                DateTime deathdt = Convert.ToDateTime(indi.death);
+                //Check if there's 150 years between death (later date) and birth (smaller date)
+                if (deathdt.AddYears(-150) >= birthdt)
+                    //yes they are too old
+                    return true;
+                else
+                    //No they are not
+                    return false;
+            }
+            //Not dead
+            else
+                return false;
         }
 
         #region Printer Methods

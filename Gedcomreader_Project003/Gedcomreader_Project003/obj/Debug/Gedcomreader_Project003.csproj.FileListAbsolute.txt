@@ -24,3 +24,5 @@ C:\Github_3_11\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Gedcomr
 C:\Github_3_11\Gedcomreader_Project003\Gedcomreader_Project003\obj\Debug\Gedcomreader_Project003.csprojResolveAssemblyReference.cache
 C:\Github_3_11\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Datelib.dll
 C:\Github_3_11\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Datelib.pdb
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Datelib.dll
+C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Datelib.pdb

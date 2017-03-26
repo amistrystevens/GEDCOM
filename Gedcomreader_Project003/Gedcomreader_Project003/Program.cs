@@ -11,7 +11,7 @@ using Datelib;
 
 namespace Gedcomreader_Project003
 {
-
+    
     public class Program
     {
         static int tableWidth = 100;
@@ -24,13 +24,20 @@ namespace Gedcomreader_Project003
 
             List<FAM> customfam = new List<FAM>();
 
+
             // string path = "C:\\Users\\kumara\\Downloads\\TestGED\\TGC55C.ged";
 
             double days, months, years;
 
             // string path = "C:\\test\\sample_family.ged";
 
-            string path = "C:\\Users\\Class2017\\Documents\\A Stuff\\SSW 555\Project06\\sample_family.ged";
+            string path = "C:\\Users\\Amit\\Desktop\\test\\sample_family.ged";
+
+           StreamWriter fileout   = new StreamWriter("C:\\Users\\Amit\\Desktop\\GED\\familytree.txt", true);
+
+
+
+            // string path = "C:\\Users\\Class2017\\Documents\\A Stuff\\SSW 555\Project06\\sample_family.ged";
 
             string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
 
@@ -215,25 +222,28 @@ namespace Gedcomreader_Project003
             }
 
 
-            PrintLine();
-            PrintRow(columns);
-            PrintLine();
+            PrintLine(fileout);
+            PrintRow(fileout,columns);
+            PrintLine(fileout);
+            
 
-            printIndividual(Individuals);
+            printIndividual(Individuals,fileout);
 
             Console.WriteLine("\n");
+            fileout.WriteLine("\n");
 
-            PrintLine();
-            PrintRow(columnsfamily);
-            PrintLine();
+            PrintLine(fileout);
+            PrintRow(fileout,columnsfamily);
+            PrintLine(fileout);
 
-            printFamily(Family);
+            printFamily(Family, fileout);
 
             Console.WriteLine("\t\t List of Errors");
-
+            fileout.WriteLine("\t\t List of Errors");
             Console.WriteLine("\t\t\t\t\tsprint1 : Users stories 3,5  ");
+            fileout.WriteLine("\t\t\t\t\tsprint1 : Users stories 3,5  ");
             Console.WriteLine("\t\t\t\t\t------------------------------\n ");
-
+            fileout.WriteLine("\t\t\t\t\t------------------------------\n ");
 
             foreach (FAM fam in Family)
             {
@@ -244,6 +254,7 @@ namespace Gedcomreader_Project003
                     if (!IsValidDateforMarriageBeforeDeath(ind, fam))
                     {
                         Console.WriteLine("ERROR: INDIVIDUAL : US3 : " + ind.ID + " : " + " Married " + fam.Married + " after death on " + ind.death);
+                        fileout.WriteLine("ERROR: INDIVIDUAL : US3 : " + ind.ID + " : " + " Married " + fam.Married + " after death on " + ind.death);
                     }
                 }
 
@@ -255,16 +266,18 @@ namespace Gedcomreader_Project003
                 if (!IsValidDateforMarriageBeforeDivorce(fam))
                 {
                     Console.WriteLine("ERROR: FAMILY : US5 : " + fam.FamID + ": Divorced on" + fam.Divorced + " before married " + fam.Married);
+                    fileout.WriteLine("ERROR: FAMILY : US5 : " + fam.FamID + ": Divorced on" + fam.Divorced + " before married " + fam.Married);
                 }
             }
 
             //------------- US 1 and US 29
 
             Console.WriteLine("\t\t List of Errors");
-
+            fileout.WriteLine("\t\t List of Errors");
             Console.WriteLine("\t\t\t\t\tsprint1 : Users stories 1,29  ");
+            fileout.WriteLine("\t\t\t\t\tsprint1 : Users stories 1,29  ");
             Console.WriteLine("\t\t\t\t\t------------------------------\n ");
-
+            fileout.WriteLine("\t\t\t\t\t------------------------------\n ");
             //datesBeforeToday(Individuals, Family);
 
             DateTime day = new DateTime(1996, 3, 24);
@@ -273,9 +286,11 @@ namespace Gedcomreader_Project003
 
             //------------- US 12 and US 15
             Console.Write("\n");
-            Console.WriteLine("\t\t\t\t\tSprint2 : Users stories 12,15  ");
+            fileout.WriteLine("\n");
+            Console.WriteLine("\t\t\t\t\tSprint2 : Users stories 12,14  ");
+            fileout.WriteLine("\t\t\t\t\tSprint2 : Users stories 12,14  ");
             Console.WriteLine("\t\t\t\t\t------------------------------\n");
-
+            fileout.WriteLine("\t\t\t\t\t------------------------------\n");
 
             int sonAge;
             int fatherAge;
@@ -297,6 +312,7 @@ namespace Gedcomreader_Project003
                     if (CompareAge(sonAge, fatherAge, motherAge))
                     {
                         Console.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father(" + fam.HusbandID + ") age (" + fatherAge + ") or mother(" + fam.Wifeid + ") age (" + motherAge + ") is  older than child (" + child[i] + ")");
+                        fileout.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father(" + fam.HusbandID + ") age (" + fatherAge + ") or mother(" + fam.Wifeid + ") age (" + motherAge + ") is  older than child (" + child[i] + ")");
                         break;
                     }
 
@@ -311,21 +327,26 @@ namespace Gedcomreader_Project003
 
                 if (IsMultipleBirth(birthday))
                 {
-                    Console.WriteLine("ERROR: FAMILY : US15 : Family " + fam.FamID + " has " + birthday.Count + " siblings ");
+                    Console.WriteLine("ERROR: FAMILY : US14 : Family " + fam.FamID + " has " + birthday.Count + " siblings ");
+                    fileout.WriteLine("ERROR: FAMILY : US14 : Family " + fam.FamID + " has " + birthday.Count + " siblings ");
                 }
 
             }
 
             //------------- US 06 and US 07
             Console.Write("\n");
+            fileout.WriteLine("\n");
             Console.WriteLine("\t\t\t\t\tSprint2 : Users stories 12,15  ");
+            fileout.WriteLine("\t\t\t\t\tSprint2 : Users stories 12,15  ");
             Console.WriteLine("\t\t\t\t\t------------------------------\n");
+            fileout.WriteLine("\t\t\t\t\t------------------------------\n");
 
             foreach (FAM fam in Family)
             {
                 if (!IsValidDateforMarriageBeforeDivorce(fam))
                 {
                     Console.WriteLine("ERROR: FAMILY : US5 : " + fam.FamID + ": Died on" + fam.Death + " before Divorced " + fam.Divorced);
+                    fileout.WriteLine("ERROR: FAMILY : US5 : " + fam.FamID + ": Died on" + fam.Death + " before Divorced " + fam.Divorced);
                 }
             }
 
@@ -334,6 +355,7 @@ namespace Gedcomreader_Project003
                 if(isTooOld(indi))
                 {
                     Console.WriteLine("ERROR: INDIVIDUAL : US07 : Family " + indi.ID + " has Birth" + indi.BirthDay + " and Death " + indi.death);
+                    fileout.WriteLine("ERROR: INDIVIDUAL : US07 : Family " + indi.ID + " has Birth" + indi.BirthDay + " and Death " + indi.death);
                 }
             }
             
@@ -528,7 +550,7 @@ namespace Gedcomreader_Project003
         /// <param name="IndiList"></param>
         /// <param name="when"></param>
         /// <returns></returns>
-        public static void deadBeforeDay(List<INDI> Individuals, DateTime when)
+        public static void deadBeforeDay(List<INDI> Individuals, DateTime when,StreamWriter fileout)
         {
             string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
 
@@ -549,13 +571,14 @@ namespace Gedcomreader_Project003
             }
 
             //Print the list of dead individuals
-            PrintLine();
+            PrintLine(fileout);
             Console.WriteLine("DEAD INDIVIDUALS BEFORE GIVEN DATE: " + when.ToString());
-            PrintLine();
-            PrintRow(columns);
-            PrintLine();
+            fileout.WriteLine("DEAD INDIVIDUALS BEFORE GIVEN DATE: " + when.ToString());
+            PrintLine(fileout);
+            PrintRow(fileout, columns);
+            PrintLine(fileout);
 
-            printIndividual(deadIndi);
+            printIndividual(deadIndi,fileout);
 
             Console.WriteLine("\n");
         }
@@ -589,7 +612,7 @@ namespace Gedcomreader_Project003
         /// <param name="IndiList"></param>
         /// <param name="when"></param>
         /// <returns></returns>
-        public static void datesBeforeToday(List<INDI> Individuals, List<FAM> Families)
+        public static void datesBeforeToday(List<INDI> Individuals, List<FAM> Families,StreamWriter fileout)
         {
             string[] columnsIndviduals = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
             string[] columnsFamily = { "FAMILYID", "MARRID", "DIVORCED", "DEATH", "HUSBANDID", "HUSBANDNAME", "WIFEID", "WIFENAME", "CHILDREN" };
@@ -609,14 +632,15 @@ namespace Gedcomreader_Project003
             }
 
             //Print the list of changed individuals
-            PrintLine();
+            PrintLine(fileout);
             Console.WriteLine("INDIVIDUALS WITH DATES BEFORE CURRENT DATE: " +DateTime.Today.ToString());
-            PrintLine();
-            PrintLine();
-            PrintRow(columnsIndviduals);
-            PrintLine();
+            fileout.WriteLine("INDIVIDUALS WITH DATES BEFORE CURRENT DATE: " + DateTime.Today.ToString());
+            PrintLine(fileout);
+            PrintLine(fileout);
+            PrintRow(fileout, columnsIndviduals);
+            PrintLine(fileout);
 
-            printIndividual(IndiWithDates);
+            printIndividual(IndiWithDates,fileout);
 
             Console.WriteLine("\n");
 
@@ -632,14 +656,14 @@ namespace Gedcomreader_Project003
             }
 
             //Print the list of changed families
-            PrintLine();
+            PrintLine(fileout);
             Console.WriteLine("FAMILIES WITH DATES BEFORE CURRENT DATE: " + DateTime.Today.ToString());
-            PrintLine();
-            PrintLine();
-            PrintRow(columnsFamily);
-            PrintLine();
+            PrintLine(fileout);
+            PrintLine(fileout);
+            PrintRow(fileout,columnsFamily);
+            PrintLine(fileout);
 
-            printFamily(FamilyWithDates);
+            printFamily(FamilyWithDates,fileout);
 
             Console.WriteLine("\n");
         }
@@ -777,7 +801,7 @@ namespace Gedcomreader_Project003
             return Val;
         }
 
-        static private void printIndividual(List<INDI> lst)
+        static private void printIndividual(List<INDI> lst, StreamWriter fileout)
         {
             //double days = 0, months = 0, years = 0;
             foreach (INDI l in lst)
@@ -785,25 +809,32 @@ namespace Gedcomreader_Project003
                 //CustomDates.calcuateDayMonthsYears( Convert.ToDateTime(l.BirthDay), ( string.IsNullOrEmpty(l.death)?System.DateTime.Now : Convert.ToDateTime(l.death)), out days, out months,out years);
                 Console.WriteLine("{0,7}{1,14}{2,7}{3,17}{4,5}{5,10}{6,15}{7,17}{8,8}",
                                    l.ID, l.Name, l.Sex, l.BirthDay, l.age , l.Dead, l.death, l.Child, l.spouse);
-                PrintLine();
+                fileout.WriteLine("{0,7}{1,14}{2,7}{3,17}{4,5}{5,10}{6,15}{7,17}{8,8}",
+                                   l.ID, l.Name, l.Sex, l.BirthDay, l.age, l.Dead, l.death, l.Child, l.spouse);
+                PrintLine(fileout);
             }
         }
 
-        static private void printFamily(List<FAM> lst)
+        static private void printFamily(List<FAM> lst, StreamWriter fileout)
         {
             foreach (FAM f in lst)
             {
                 Console.WriteLine("{0,7}{1,15}{2,15}{3,10}{4,5}{5,10}{6,5}{7,10}{8,15}",
                     f.FamID, f.Married, f.Divorced, f.Death, f.HusbandID, f.Husbandname, f.Wifeid, f.Wifename, f.childeren);
+                fileout.WriteLine("{0,7}{1,15}{2,15}{3,10}{4,5}{5,10}{6,5}{7,10}{8,15}",
+                    f.FamID, f.Married, f.Divorced, f.Death, f.HusbandID, f.Husbandname, f.Wifeid, f.Wifename, f.childeren);
             }
         }
 
-        static void PrintLine()
+        static void PrintLine(StreamWriter fileout)
         {
             Console.WriteLine(new string('-', tableWidth));
+
+            fileout.WriteLine(new string('-', tableWidth));
+
         }
 
-        static void PrintRow(params string[] columns)
+        static void PrintRow(StreamWriter fileout, params string[] columns )
         {
             int width = (tableWidth - columns.Length) / columns.Length;
             string row = "|";
@@ -812,8 +843,9 @@ namespace Gedcomreader_Project003
             {
                 row += AlignCentre(column, width) + "|";
             }
-
+            
             Console.WriteLine(row);
+            fileout.WriteLine(row);
         }
 
         static string AlignCentre(string text, int width)

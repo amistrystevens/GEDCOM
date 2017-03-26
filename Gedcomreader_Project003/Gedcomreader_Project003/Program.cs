@@ -31,9 +31,13 @@ namespace Gedcomreader_Project003
 
             // string path = "C:\\test\\sample_family.ged";
 
-            string path = "C:\\Users\\Amit\\Desktop\\test\\sample_family.ged";
+            string path = "C:\\Users\\Amit\\Desktop\\GED\\sample_family.ged";
 
-           StreamWriter fileout   = new StreamWriter("C:\\Users\\Amit\\Desktop\\GED\\familytree.txt", true);
+            string outputpath = "C:\\Users\\Amit\\Desktop\\GED\\familytree.txt";
+
+          //  File.Create(outputpath);
+
+            StreamWriter fileout   = new StreamWriter(outputpath,true);
 
 
 
@@ -214,7 +218,7 @@ namespace Gedcomreader_Project003
 
                         famObj = null;
 
-
+                        i = i - 2;
                     }
 
                 }
@@ -284,7 +288,7 @@ namespace Gedcomreader_Project003
 
             //deadBeforeDay(Individuals, day);
 
-            //------------- US 12 and US 15
+            //------------- US 12 and US 14
             Console.Write("\n");
             fileout.WriteLine("\n");
             Console.WriteLine("\t\t\t\t\tSprint2 : Users stories 12,14  ");
@@ -298,37 +302,40 @@ namespace Gedcomreader_Project003
             List<int> birthday = new List<int>();
             foreach (FAM fam in Family)
             {
-                var childeren = fam.childeren;
-                string mychildern = childeren.Trim(new Char[] { ' ', ',' });
-                string[] child = mychildern.Split(',');
-
-                fatherAge = Individuals.Where(ind => ind.ID == fam.HusbandID).SingleOrDefault().age;
-                motherAge = Individuals.Where(ind => ind.ID == fam.Wifeid).SingleOrDefault().age;
-
-                for (int i = 0; i < child.Length; i++)
+                if (fam.childeren != null)
                 {
-                    sonAge = Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().age;
+                    var childeren = fam.childeren;
+                    string mychildern = childeren.Trim(new Char[] { ' ', ',' });
+                    string[] child = mychildern.Split(',');
 
-                    if (CompareAge(sonAge, fatherAge, motherAge))
+                    fatherAge = Individuals.Where(ind => ind.ID == fam.HusbandID).SingleOrDefault().age;
+                    motherAge = Individuals.Where(ind => ind.ID == fam.Wifeid).SingleOrDefault().age;
+
+                    for (int i = 0; i < child.Length; i++)
                     {
-                        Console.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father(" + fam.HusbandID + ") age (" + fatherAge + ") or mother(" + fam.Wifeid + ") age (" + motherAge + ") is  older than child (" + child[i] + ")");
-                        fileout.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father(" + fam.HusbandID + ") age (" + fatherAge + ") or mother(" + fam.Wifeid + ") age (" + motherAge + ") is  older than child (" + child[i] + ")");
-                        break;
+                        sonAge = Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().age;
+
+                        if (CompareAge(sonAge, fatherAge, motherAge))
+                        {
+                            Console.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father(" + fam.HusbandID + ") age (" + fatherAge + ") or mother(" + fam.Wifeid + ") age (" + motherAge + ") is  older than child (" + child[i] + ")");
+                            fileout.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father(" + fam.HusbandID + ") age (" + fatherAge + ") or mother(" + fam.Wifeid + ") age (" + motherAge + ") is  older than child (" + child[i] + ")");
+                            break;
+                        }
+
                     }
 
-                }
+
+                    for (int i = 0; i < child.Length; i++)
+                    {
+                        birthday.Add(Convert.ToDateTime(Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().BirthDay).Day);
+                    }
 
 
-                for (int i = 0; i < child.Length; i++)
-                {
-                    birthday.Add(Convert.ToDateTime(Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().BirthDay).Day);
-                }
-
-
-                if (IsMultipleBirth(birthday))
-                {
-                    Console.WriteLine("ERROR: FAMILY : US14 : Family " + fam.FamID + " has " + birthday.Count + " siblings ");
-                    fileout.WriteLine("ERROR: FAMILY : US14 : Family " + fam.FamID + " has " + birthday.Count + " siblings ");
+                    if (IsMultipleBirth(birthday))
+                    {
+                        Console.WriteLine("ERROR: FAMILY : US14 : Family " + fam.FamID + " has " + birthday.Count + " siblings ");
+                        fileout.WriteLine("ERROR: FAMILY : US14 : Family " + fam.FamID + " has " + birthday.Count + " siblings ");
+                    }
                 }
 
             }
@@ -358,16 +365,54 @@ namespace Gedcomreader_Project003
                     fileout.WriteLine("ERROR: INDIVIDUAL : US07 : Family " + indi.ID + " has Birth" + indi.BirthDay + " and Death " + indi.death);
                 }
             }
-            
+
+
+
+            /////User Stroies 18,19
 
             
+            Console.Write("\n");
+            fileout.WriteLine("\n");
+            Console.WriteLine("\t\t\t\t\tSprint3 : Users stories 18,19  ");
+            fileout.WriteLine("\t\t\t\t\tSprint3 : Users stories 18,19  ");
+            Console.WriteLine("\t\t\t\t\t------------------------------\n");
+            fileout.WriteLine("\t\t\t\t\t------------------------------\n");
 
-            // Keep the console window open in debug mode.
-            Console.WriteLine("\n\n\n\nPress any key to exit.");
+
+           // Family.ForEach( i=>i.HusbandID  Family.ForEach( i=>i.HusbandID)
+
+            foreach (FAM fam in Family)
+            {
+                if(fam.HusbandID!=null && fam.Wifeid!=null)
+                {
+                    foreach(var innerfam in Family)
+                    {
+                        if(innerfam.childeren !=null)
+                        {
+                            var childeren = innerfam.childeren;
+                            string mychildern = childeren.Trim(new Char[] { ' ', ',' });
+                            string[] child = mychildern.Split(',');
+
+                            if(child.Contains(fam.HusbandID) && child.Contains(fam.Wifeid))
+                            {
+                                Console.WriteLine("ERROR: FAMILY : US18 : " + fam.FamID + ": " + fam.HusbandID + " cannot marry to siblig " + fam.Wifeid);
+                                fileout.WriteLine("ERROR: FAMILY : US18 : " + fam.FamID + ": " + fam.HusbandID + " cannot marry to siblings " + fam.Wifeid);
+                            }
+                        }
+                    }
+                } 
+            }
+
+
+
+
+                // Keep the console window open in debug mode.
+                Console.WriteLine("\n\n\n\nPress any key to exit.");
             System.Console.ReadKey();
 
 
         }
+
 
         //US12: The description in column C explains that US12, parents too old, 
         //occurs when the father’s age – child’s age >= 80 or mother’s age – child’s age >= 60 
@@ -406,6 +451,19 @@ namespace Gedcomreader_Project003
 
             return bmultibirth;
         }
+
+
+        //US18 Siblings should not marry : Siblings should not marry one another
+
+        public static bool IsSiblingsMarryoneanother()
+        {
+
+            return false;
+        }
+
+
+        //US19    First cousins should not marry : First cousins should not marry one another
+
 
 
 

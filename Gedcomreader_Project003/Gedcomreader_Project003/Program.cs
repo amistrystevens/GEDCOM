@@ -405,9 +405,52 @@ namespace Gedcomreader_Project003
 
 
 
+            /////User Stroies 22,23
 
-                // Keep the console window open in debug mode.
-                Console.WriteLine("\n\n\n\nPress any key to exit.");
+
+            Console.Write("\n");
+            fileout.WriteLine("\n");
+            Console.WriteLine("\t\t\t\t\tSprint3 : Users stories 22,23  ");
+            fileout.WriteLine("\t\t\t\t\tSprint3 : Users stories 22,23  ");
+            Console.WriteLine("\t\t\t\t\t------------------------------\n");
+            fileout.WriteLine("\t\t\t\t\t------------------------------\n");
+
+            List<string> resultsFam = new List<string>();
+            if (!isIDUniqueFam(Family, ref resultsFam))
+            {
+                foreach (string s in resultsFam)
+                {
+                    Console.WriteLine("ERROR: FAMILY : US22 : " + s + " Family ID's Match");
+                    fileout.WriteLine("ERROR: FAMILY : US22 : " + s + " Family ID's Match");
+                }
+            }
+            List<string> resultsIndi = new List<string>();
+            if (!isIDUniqueFam(Family, ref resultsIndi))
+            {
+                foreach (string s in resultsIndi)
+                {
+                    Console.WriteLine("ERROR: INDIVIDUAL : US22 : " + s + " Individual ID's Match");
+                    fileout.WriteLine("ERROR: INDIVIDUAL : US22 : " + s + " Individual ID's Match");
+                }
+            }
+
+            List<string> resultsNames = new List<string>();
+            List<string> resultsBirthday = new List<string>();
+            if (!isNameBirthdayUnique(Individuals, ref resultsNames, ref resultsBirthday))
+            {
+                int counter = 0;
+                foreach (string s in resultsNames)
+                {
+                    Console.WriteLine("ERROR: INDIVIDUAL : US23 : " + s + " " + resultsBirthday[counter] + " Individual Names and Birthdays Match");
+                    fileout.WriteLine("ERROR: INDIVIDUAL : US23 : " + s + " " + resultsBirthday[counter] + " Individual Names and Birthdays Match");
+                    counter++;
+                }
+            }
+
+
+
+            // Keep the console window open in debug mode.
+            Console.WriteLine("\n\n\n\nPress any key to exit.");
             System.Console.ReadKey();
 
 
@@ -843,6 +886,125 @@ namespace Gedcomreader_Project003
             //Not dead
             else
                 return false;
+        }
+
+        /// <summary>
+        /// US022	Unique ID's
+        /// </summary>
+        /// <param name="indiObj"></param>
+        /// <param name="famObj"></param>
+        /// <returns> bool </returns>
+        public static bool isIDUnique(List<INDI> indi, List<FAM> fam)
+        {
+            List<string> results = new List<string>();
+            if (!isIDUniqueIndi(indi, ref results))
+                return false;
+            else if (!isIDUniqueFam(fam, ref results))
+                return false;
+            else return true;
+        }
+        public static bool isIDUniqueIndi(List<INDI> indi, ref List<string> results)
+        {
+            List<string> ids = new List<string>();
+            bool endResult = true;
+            //Loop through each individual
+            foreach (INDI i in indi)
+            {
+                //Ensure individual ID's are not null
+                if (i.ID != null)
+                {
+                    //if the id is not in the list, add it.  Otherwise, it's a copy and invalid
+                    if (!ids.Contains(i.ID))
+                        ids.Add(i.ID);
+                    else
+                    {
+                        endResult = false;
+                        results.Add(i.ID);
+                    }
+
+                }   
+            }
+            return endResult;
+        }
+        public static bool isIDUniqueFam(List<FAM> fam, ref List<string> results)
+        {
+            List<string> ids = new List<string>();
+            bool endResult = true;
+            //Loop through each family
+            foreach (FAM f in fam)
+            {
+                //Ensure family ID's are not null
+                if (f.FamID != null)
+                {
+                    //if the id is not in the list, add it.  Otherwise, it's a copy and invalid
+                    if (!ids.Contains(f.FamID))
+                        ids.Add(f.FamID);
+                    else
+                    {
+                        endResult = false;
+                        results.Add(f.FamID);
+                    }
+
+                }
+            }
+            return endResult;
+        }
+
+        /// <summary>
+        /// US023	Unique names and birthdates
+        /// </summary>
+        /// <param name="indiObj"></param>
+        /// <param name="famObj"></param>
+        /// <returns> bool </returns>
+
+        public static bool isNameBirthdayUnique(List<INDI> indi, ref List<string> namesResult, ref List<string> birthdaysResult)
+        {
+            List<string>names = new List<string>();
+            List<string>birthdays = new List<string>();
+            bool endResult = true;
+
+            //Loop through each individual
+            foreach (INDI i in indi)
+            {
+                //Ensure parameters aren't null
+                if (i.Name != null && i.BirthDay != null)
+                {
+                    //If one or the other record doesn't exist, it doesn't matter, add it
+                    if (!names.Contains(i.Name) || !birthdays.Contains(i.BirthDay))
+                    {
+                        names.Add(i.Name);
+                        birthdays.Add(i.BirthDay);
+                    }
+                    //If the name exists, check for birthday
+                    else if (names.Contains(i.Name))
+                    {
+                        int counter = 0;
+                        foreach(String s in names)
+                        {
+                            if(s.Equals(i.Name))
+                            {
+                                //If both matched, return false
+                                if(birthdays[counter].Equals(i.BirthDay))
+                                {
+                                    endResult = false;
+                                    namesResult.Add(i.Name);
+                                    birthdaysResult.Add(i.BirthDay);
+                                }
+                            }
+
+                            //Increment the counte because name matched, but not birthday
+                            counter++;
+                        }
+                    }
+                    //Name or birthday existed, but not for the same person.  Add it.  
+                    else
+                    {
+                        names.Add(i.Name);
+                        birthdays.Add(i.BirthDay);
+                    }    
+                }
+            }
+            return endResult;
         }
 
         #region Printer Methods

@@ -18,7 +18,7 @@ namespace Gedcomreader_Project003
 
         static void Main(string[] args)
         {
-
+            
             List<INDI> Individuals = new List<INDI>();
             List<FAM> Family = new List<FAM>();
 

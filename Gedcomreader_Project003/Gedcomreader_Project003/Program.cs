@@ -35,7 +35,7 @@ namespace Gedcomreader_Project003
 
             string outputpath = "C:\\Users\\Amit\\Desktop\\GED\\familytree.txt";
 
-          //  File.Create(outputpath);
+            //  File.Create(outputpath);
 
             StreamWriter fileout   = new StreamWriter(outputpath,true);
 
@@ -282,9 +282,12 @@ namespace Gedcomreader_Project003
             fileout.WriteLine("\t\t\t\t\tsprint1 : Users stories 1,29  ");
             Console.WriteLine("\t\t\t\t\t------------------------------\n ");
             fileout.WriteLine("\t\t\t\t\t------------------------------\n ");
-            //datesBeforeToday(Individuals, Family);
 
+            datesBeforeToday(Individuals, Family, fileout);
             DateTime day = new DateTime(1996, 3, 24);
+
+            deadBeforeDay(Individuals, day, fileout);
+
 
             //deadBeforeDay(Individuals, day);
 
@@ -343,17 +346,17 @@ namespace Gedcomreader_Project003
             //------------- US 06 and US 07
             Console.Write("\n");
             fileout.WriteLine("\n");
-            Console.WriteLine("\t\t\t\t\tSprint2 : Users stories 12,15  ");
-            fileout.WriteLine("\t\t\t\t\tSprint2 : Users stories 12,15  ");
+            Console.WriteLine("\t\t\t\t\tSprint2 : Users stories 06,07  ");
+            fileout.WriteLine("\t\t\t\t\tSprint2 : Users stories 06,07  ");
             Console.WriteLine("\t\t\t\t\t------------------------------\n");
             fileout.WriteLine("\t\t\t\t\t------------------------------\n");
 
             foreach (FAM fam in Family)
             {
-                if (!IsValidDateforMarriageBeforeDivorce(fam))
+                if (!IsValidDateforDivorceBeforeDeath(fam))
                 {
-                    Console.WriteLine("ERROR: FAMILY : US5 : " + fam.FamID + ": Died on" + fam.Death + " before Divorced " + fam.Divorced);
-                    fileout.WriteLine("ERROR: FAMILY : US5 : " + fam.FamID + ": Died on" + fam.Death + " before Divorced " + fam.Divorced);
+                    Console.WriteLine("ERROR: FAMILY : US5 : " + fam.FamID + ": Died on " + fam.Death + " before Divorced " + fam.Divorced);
+                    fileout.WriteLine("ERROR: FAMILY : US5 : " + fam.FamID + ": Died on " + fam.Death + " before Divorced " + fam.Divorced);
                 }
             }
 
@@ -361,8 +364,8 @@ namespace Gedcomreader_Project003
             {
                 if(isTooOld(indi))
                 {
-                    Console.WriteLine("ERROR: INDIVIDUAL : US07 : Family " + indi.ID + " has Birth" + indi.BirthDay + " and Death " + indi.death);
-                    fileout.WriteLine("ERROR: INDIVIDUAL : US07 : Family " + indi.ID + " has Birth" + indi.BirthDay + " and Death " + indi.death);
+                    Console.WriteLine("ERROR: INDIVIDUAL : US07 : Family " + indi.ID + " has Birth " + indi.BirthDay + " and Death " + indi.death);
+                    fileout.WriteLine("ERROR: INDIVIDUAL : US07 : Family " + indi.ID + " has Birth " + indi.BirthDay + " and Death " + indi.death);
                 }
             }
 
@@ -451,6 +454,8 @@ namespace Gedcomreader_Project003
 
             // Keep the console window open in debug mode.
             Console.WriteLine("\n\n\n\nPress any key to exit.");
+            fileout.Flush();
+            fileout.Close();
             System.Console.ReadKey();
 
 
@@ -713,7 +718,7 @@ namespace Gedcomreader_Project003
         /// <param name="IndiList"></param>
         /// <param name="when"></param>
         /// <returns></returns>
-        public static void datesBeforeToday(List<INDI> Individuals, List<FAM> Families,StreamWriter fileout)
+        public static void datesBeforeToday(List<INDI> Individuals, List<FAM> Families, StreamWriter fileout)
         {
             string[] columnsIndviduals = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
             string[] columnsFamily = { "FAMILYID", "MARRID", "DIVORCED", "DEATH", "HUSBANDID", "HUSBANDNAME", "WIFEID", "WIFENAME", "CHILDREN" };
@@ -788,9 +793,7 @@ namespace Gedcomreader_Project003
             }
             else if (today < Convert.ToDateTime(i.death))
             {
-                i.death = "";
                 changed = true;
-                i.Dead = false;
             }
             if (i.BirthDay == null || i.BirthDay.Equals(""))
             {
@@ -798,7 +801,6 @@ namespace Gedcomreader_Project003
             }
             else if (today < Convert.ToDateTime(i.BirthDay))
             {
-                i.BirthDay = "";
                 changed = true;
             }
 
@@ -824,7 +826,6 @@ namespace Gedcomreader_Project003
             }
             else if (today < Convert.ToDateTime(f.Married))
             {
-                f.Married = "";
                 changed = true;
             }
             if (f.Divorced == null || f.Divorced.Equals(""))
@@ -833,7 +834,6 @@ namespace Gedcomreader_Project003
             }
             else if (today < Convert.ToDateTime(f.Divorced))
             {
-                f.Divorced = "";
                 changed = true;
             }
 

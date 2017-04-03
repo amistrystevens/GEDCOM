@@ -226,6 +226,28 @@ namespace Gedcomreader_Project003
             }
 
 
+            foreach (var mem in Family)
+            {
+                foreach (var ind in Individuals)
+                {
+                    if (mem.HusbandID == ind.ID)
+                    {
+                        ind.spouse = mem.Wifeid;
+                    }
+
+                    if (mem.Wifeid == ind.ID)
+                    {
+
+                        ind.spouse = mem.HusbandID;
+                    }
+
+                }
+
+            }
+
+
+
+
             PrintLine(fileout);
             PrintRow(fileout,columns);
             PrintLine(fileout);
@@ -316,7 +338,7 @@ namespace Gedcomreader_Project003
 
                     for (int i = 0; i < child.Length; i++)
                     {
-                        sonAge = Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().age;
+                        sonAge = Individuals.Where(ind => ind.ID == child[i]).FirstOrDefault().age;
 
                         if (CompareAge(sonAge, fatherAge, motherAge))
                         {
@@ -330,7 +352,7 @@ namespace Gedcomreader_Project003
 
                     for (int i = 0; i < child.Length; i++)
                     {
-                        birthday.Add(Convert.ToDateTime(Individuals.Where(ind => ind.ID == child[i]).SingleOrDefault().BirthDay).Day);
+                        birthday.Add(Convert.ToDateTime(Individuals.Where(ind => ind.ID == child[i]).FirstOrDefault().BirthDay).Day);
                     }
 
 
@@ -371,9 +393,9 @@ namespace Gedcomreader_Project003
 
 
 
-            /////User Stroies 18,19
 
-            
+            /////User Stroies 18,19           
+
             Console.Write("\n");
             fileout.WriteLine("\n");
             Console.WriteLine("\t\t\t\t\tSprint3 : Users stories 18,19  ");
@@ -382,30 +404,53 @@ namespace Gedcomreader_Project003
             fileout.WriteLine("\t\t\t\t\t------------------------------\n");
 
 
-           // Family.ForEach( i=>i.HusbandID  Family.ForEach( i=>i.HusbandID)
-
             foreach (FAM fam in Family)
             {
-                if(fam.HusbandID!=null && fam.Wifeid!=null)
+                if (fam.HusbandID != null && fam.Wifeid != null)
                 {
-                    foreach(var innerfam in Family)
+                    if (IsSiblingsMarryoneanother(fam, Family))
                     {
-                        if(innerfam.childeren !=null)
-                        {
-                            var childeren = innerfam.childeren;
-                            string mychildern = childeren.Trim(new Char[] { ' ', ',' });
-                            string[] child = mychildern.Split(',');
-
-                            if(child.Contains(fam.HusbandID) && child.Contains(fam.Wifeid))
-                            {
-                                Console.WriteLine("ERROR: FAMILY : US18 : " + fam.FamID + ": " + fam.HusbandID + " cannot marry to siblig " + fam.Wifeid);
-                                fileout.WriteLine("ERROR: FAMILY : US18 : " + fam.FamID + ": " + fam.HusbandID + " cannot marry to siblings " + fam.Wifeid);
-                            }
-                        }
+                        Console.WriteLine("ERROR: FAMILY : US18 : " + fam.FamID + ": " + fam.HusbandID + " cannot marry to siblig " + fam.Wifeid);
+                        fileout.WriteLine("ERROR: FAMILY : US18 : " + fam.FamID + ": " + fam.HusbandID + " cannot marry to siblings " + fam.Wifeid);
                     }
-                } 
+                }
+
             }
 
+
+
+            //string[] child1;
+            List<KeyValuePair<string, string[]>> grp = new List<KeyValuePair<string, string[]>>();
+            foreach (FAM fam in Family)
+            {
+
+                if (fam.HusbandID != null && fam.Wifeid != null)
+                {
+
+                    if (fam.childeren != null)
+                    {
+                        var childeren = fam.childeren;
+                        string mychildern = childeren.Trim(new Char[] { ' ', ',' });
+                        string[] child1 = mychildern.Split(',');
+                        grp.Add(new KeyValuePair<string, string[]>(fam.FamID, child1));
+                    }
+                }
+            }
+
+            string wifeid;
+            foreach (var v in grp)
+            {
+                foreach (var j in v.Value)
+                {
+
+                    if (IsFirstCousinMarriedOneAnother(Individuals, j, v, out wifeid))
+                    {
+                        Console.WriteLine("ERROR: FAMILY : US19 : " + v.Key + ": " + j + " First cousins should not marry one another " + wifeid);
+                        fileout.WriteLine("ERROR: FAMILY : US19 : " + v.Key + ": " + j + " First cousins should not marry one another  " + wifeid);
+                    }
+
+                }
+            }
 
 
             /////User Stroies 22,23
@@ -503,14 +548,53 @@ namespace Gedcomreader_Project003
 
         //US18 Siblings should not marry : Siblings should not marry one another
 
-        public static bool IsSiblingsMarryoneanother()
+        public static bool IsSiblingsMarryoneanother(FAM fam, List<FAM> Family)
         {
+            foreach (var innerfam in Family)
+            {
+                if (innerfam.childeren != null)
+                {
+                    var childeren = innerfam.childeren;
+                    string mychildern = childeren.Trim(new Char[] { ' ', ',' });
+                    string[] child = mychildern.Split(',');
 
+                    if (child.Contains(fam.HusbandID) && child.Contains(fam.Wifeid))
+                    {
+                        return true;
+                    }
+
+                }
+
+            }
             return false;
         }
 
 
+
+
         //US19    First cousins should not marry : First cousins should not marry one another
+
+        public static bool IsFirstCousinMarriedOneAnother(List<INDI> Individuals, string j, KeyValuePair<string, string[]> v, out string wifeid)
+        {
+            // bool IsmarriedOneAnother =false ;
+            foreach (var ind in Individuals)
+            {
+                if (ind.ID == j)
+                {
+                    if (v.Value.Contains(ind.spouse))
+                    {
+
+                        wifeid = ind.spouse;
+                        return true;
+                    }
+                }
+
+            }
+
+            wifeid = null;
+            return false;
+        }
+
 
 
 

@@ -31,9 +31,9 @@ namespace Gedcomreader_Project003
 
             // string path = "C:\\test\\sample_family.ged";
 
-            string path = "C:\\Users\\Amit\\Desktop\\GED\\sample_family.ged";
+            string path = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\sample_family.ged";
 
-            string outputpath = "C:\\Users\\Amit\\Desktop\\GED\\familytree.txt";
+            string outputpath = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\output.txt";
 
             //  File.Create(outputpath);
 
@@ -264,10 +264,11 @@ namespace Gedcomreader_Project003
 
             printFamily(Family, fileout);
 
-            Console.WriteLine("\t\t List of Errors");
-            fileout.WriteLine("\t\t List of Errors");
-            Console.WriteLine("\t\t\t\t\tsprint1 : Users stories 3,5  ");
-            fileout.WriteLine("\t\t\t\t\tsprint1 : Users stories 3,5  ");
+            Console.WriteLine("\n");
+            fileout.WriteLine("\n");
+
+            Console.WriteLine("\t\t\t\t\tSprint1 : Users stories 3,5  ");
+            fileout.WriteLine("\t\t\t\t\tSprint1 : Users stories 3,5  ");
             Console.WriteLine("\t\t\t\t\t------------------------------\n ");
             fileout.WriteLine("\t\t\t\t\t------------------------------\n ");
 
@@ -291,17 +292,16 @@ namespace Gedcomreader_Project003
             {
                 if (!IsValidDateforMarriageBeforeDivorce(fam))
                 {
-                    Console.WriteLine("ERROR: FAMILY : US5 : " + fam.FamID + ": Divorced on" + fam.Divorced + " before married " + fam.Married);
-                    fileout.WriteLine("ERROR: FAMILY : US5 : " + fam.FamID + ": Divorced on" + fam.Divorced + " before married " + fam.Married);
+                    Console.WriteLine("ERROR: FAMILY : US5 : " + fam.FamID + ": Divorced on: " + fam.Divorced + " before married " + fam.Married);
+                    fileout.WriteLine("ERROR: FAMILY : US5 : " + fam.FamID + ": Divorced on: " + fam.Divorced + " before married " + fam.Married);
                 }
             }
-
+            Console.WriteLine("\n");
+            fileout.WriteLine("\n");
             //------------- US 1 and US 29
 
-            Console.WriteLine("\t\t List of Errors");
-            fileout.WriteLine("\t\t List of Errors");
-            Console.WriteLine("\t\t\t\t\tsprint1 : Users stories 1,29  ");
-            fileout.WriteLine("\t\t\t\t\tsprint1 : Users stories 1,29  ");
+            Console.WriteLine("\t\t\t\t\tSprint1 : Users stories 1,29  ");
+            fileout.WriteLine("\t\t\t\t\tSprint1 : Users stories 1,29  ");
             Console.WriteLine("\t\t\t\t\t------------------------------\n ");
             fileout.WriteLine("\t\t\t\t\t------------------------------\n ");
 
@@ -473,12 +473,12 @@ namespace Gedcomreader_Project003
                 }
             }
             List<string> resultsIndi = new List<string>();
-            if (!isIDUniqueFam(Family, ref resultsIndi))
+            if (!isIDUniqueIndi(Individuals, ref resultsIndi))
             {
-                foreach (string s in resultsIndi)
+                for (int i = 0; i < resultsIndi.Count(); i += 3)
                 {
-                    Console.WriteLine("ERROR: INDIVIDUAL : US22 : " + s + " Individual ID's Match");
-                    fileout.WriteLine("ERROR: INDIVIDUAL : US22 : " + s + " Individual ID's Match");
+                    Console.WriteLine("ERROR: INDIVIDUAL : US22 : " + "ID: " + resultsIndi[i] + " Name: " + resultsIndi[i + 1] + " Name: " + resultsIndi[i + 2] + " " + " Individual ID's Match");
+                    fileout.WriteLine("ERROR: INDIVIDUAL : US22 : " + resultsIndi[i] + "Name: " + resultsIndi[i + 1] + "Name: " + resultsIndi[i + 2] + " " + " Individual ID's Match");
                 }
             }
 
@@ -742,7 +742,7 @@ namespace Gedcomreader_Project003
         /// <returns></returns>
         public static void deadBeforeDay(List<INDI> Individuals, DateTime when,StreamWriter fileout)
         {
-            string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
+            //string[] columns = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
 
             List<INDI> deadIndi = new List<INDI>();
 
@@ -761,16 +761,17 @@ namespace Gedcomreader_Project003
             }
 
             //Print the list of dead individuals
-            PrintLine(fileout);
+
             Console.WriteLine("DEAD INDIVIDUALS BEFORE GIVEN DATE: " + when.ToString());
             fileout.WriteLine("DEAD INDIVIDUALS BEFORE GIVEN DATE: " + when.ToString());
-            PrintLine(fileout);
-            PrintRow(fileout, columns);
-            PrintLine(fileout);
 
-            printIndividual(deadIndi,fileout);
+            foreach (INDI i in deadIndi)
+            {
 
-            Console.WriteLine("\n");
+                Console.WriteLine("ERROR: INDIVIDUAL : US29 :" + i.Name + " Died on: " + i.death);
+                fileout.WriteLine("ERROR: INDIVIDUAL : US29 :" + i.Name + " Died on: " + i.death);
+            }
+
         }
 
         /// <summary>
@@ -804,8 +805,8 @@ namespace Gedcomreader_Project003
         /// <returns></returns>
         public static void datesBeforeToday(List<INDI> Individuals, List<FAM> Families, StreamWriter fileout)
         {
-            string[] columnsIndviduals = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
-            string[] columnsFamily = { "FAMILYID", "MARRID", "DIVORCED", "DEATH", "HUSBANDID", "HUSBANDNAME", "WIFEID", "WIFENAME", "CHILDREN" };
+            //string[] columnsIndviduals = { "ID", "NAME", "Gender", "Birthday", "Age", "Alive", "Death", "child", "spouse" };
+            //string[] columnsFamily = { "FAMILYID", "MARRID", "DIVORCED", "DEATH", "HUSBANDID", "HUSBANDNAME", "WIFEID", "WIFENAME", "CHILDREN" };
 
             List<INDI> IndiWithDates = new List<INDI>();
             List<FAM> FamilyWithDates = new List<FAM>();
@@ -813,49 +814,43 @@ namespace Gedcomreader_Project003
             INDI currentIndi = new INDI();
             bool changed = false;
             //Loop through and check all the death days on individuals
+
+            Console.WriteLine("INDIVIDUALS WITH DATES AFTER CURRENT DATE: " + DateTime.Today.ToString());
+            fileout.WriteLine("INDIVIDUALS WITH DATES AFTER CURRENT DATE: " + DateTime.Today.ToString());
+
             for (int i = 0; i < Individuals.Count(); i++)
             {
                 currentIndi = Individuals[i];
-                changed = isDateAfterTodayIndi(ref currentIndi);
+                changed = isDateAfterTodayIndi(ref currentIndi, fileout);
                 if (changed)
                     IndiWithDates.Add(currentIndi);
             }
 
             //Print the list of changed individuals
-            PrintLine(fileout);
-            Console.WriteLine("INDIVIDUALS WITH DATES BEFORE CURRENT DATE: " +DateTime.Today.ToString());
-            fileout.WriteLine("INDIVIDUALS WITH DATES BEFORE CURRENT DATE: " + DateTime.Today.ToString());
-            PrintLine(fileout);
-            PrintLine(fileout);
-            PrintRow(fileout, columnsIndviduals);
-            PrintLine(fileout);
-
-            printIndividual(IndiWithDates,fileout);
+ 
+           
 
             Console.WriteLine("\n");
-
+            fileout.WriteLine("\n");
             //Loop through all Families now
             changed = false;
             FAM currentFam = new FAM();
+            Console.WriteLine("FAMILIES WITH DATES BEFORE CURRENT DATE: " + DateTime.Today.ToString());
+            fileout.WriteLine("FAMILIES WITH DATES BEFORE CURRENT DATE: " + DateTime.Today.ToString());
+
             for (int i = 0; i < Families.Count(); i++)
             {
                 currentFam = Families[i];
-                changed = isDateAfterTodayFam(ref currentFam);
+                changed = isDateAfterTodayFam(ref currentFam, fileout);
                 if (changed)
                     FamilyWithDates.Add(currentFam);
             }
 
             //Print the list of changed families
-            PrintLine(fileout);
-            Console.WriteLine("FAMILIES WITH DATES BEFORE CURRENT DATE: " + DateTime.Today.ToString());
-            PrintLine(fileout);
-            PrintLine(fileout);
-            PrintRow(fileout,columnsFamily);
-            PrintLine(fileout);
-
-            printFamily(FamilyWithDates,fileout);
+           
 
             Console.WriteLine("\n");
+            fileout.WriteLine("\n");
         }
 
         /// <summary>
@@ -865,7 +860,7 @@ namespace Gedcomreader_Project003
         /// <param name="IndiList"></param>
         /// <param name="when"></param>
         /// <returns></returns>
-        public static bool isDateAfterTodayIndi(ref INDI i)
+        public static bool isDateAfterTodayIndi(ref INDI i, StreamWriter fileout)
         {
             bool changed = false;
             DateTime today = DateTime.Today;
@@ -878,6 +873,8 @@ namespace Gedcomreader_Project003
             else if (today < Convert.ToDateTime(i.death))
             {
                 changed = true;
+                Console.WriteLine("ERROR: INDIVIDUAL : US01 : " + i.Name + "Has Death Date: " + i.death);
+                fileout.WriteLine("ERROR: INDIVIDUAL : US01 : " + i.Name + "Has Death Date: " + i.death);
             }
             if (i.BirthDay == null || i.BirthDay.Equals(""))
             {
@@ -886,6 +883,8 @@ namespace Gedcomreader_Project003
             else if (today < Convert.ToDateTime(i.BirthDay))
             {
                 changed = true;
+                Console.WriteLine("ERROR: INDIVIDUAL : US01 : " + i.Name + "Has Birth Date: " + i.death);
+                fileout.WriteLine("ERROR: INDIVIDUAL : US01 : " + i.Name + "Has Birth Date: " + i.death);
             }
 
             return changed;
@@ -898,7 +897,7 @@ namespace Gedcomreader_Project003
         /// <param name="IndiList"></param>
         /// <param name="when"></param>
         /// <returns></returns>
-        public static bool isDateAfterTodayFam(ref FAM f)
+        public static bool isDateAfterTodayFam(ref FAM f, StreamWriter fileout)
         {
             bool changed = false;
             DateTime today = DateTime.Today;
@@ -911,6 +910,8 @@ namespace Gedcomreader_Project003
             else if (today < Convert.ToDateTime(f.Married))
             {
                 changed = true;
+                Console.WriteLine("ERROR: FAMILY : US01 : " + f.FamID + "Has Marriage Date: " + f.Married);
+                fileout.WriteLine("ERROR: FAMILY : US01 : " + f.FamID + "Has Marriage Date: " + f.Married);
             }
             if (f.Divorced == null || f.Divorced.Equals(""))
             {
@@ -919,6 +920,8 @@ namespace Gedcomreader_Project003
             else if (today < Convert.ToDateTime(f.Divorced))
             {
                 changed = true;
+                Console.WriteLine("ERROR: FAMILY : US01 : " + f.FamID + "Has Divorce Date: " + f.Married);
+                fileout.WriteLine("ERROR: FAMILY : US01 : " + f.FamID + "Has Divorce Date: " + f.Married);
             }
 
             return changed;
@@ -999,11 +1002,25 @@ namespace Gedcomreader_Project003
                 {
                     //if the id is not in the list, add it.  Otherwise, it's a copy and invalid
                     if (!ids.Contains(i.ID))
+                    {
                         ids.Add(i.ID);
+                        ids.Add(i.Name);
+                    }
                     else
                     {
                         endResult = false;
                         results.Add(i.ID);
+                        results.Add(i.Name);
+                        int count = 0;
+                        foreach(string s in ids)
+                        {   
+                            if (s.Equals(i.ID))
+                            {
+                                results.Add(ids[count + 1]);
+                                break;
+                            }
+                            count++;
+                        }
                     }
 
                 }   

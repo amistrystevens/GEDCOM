@@ -29,11 +29,16 @@ namespace Gedcomreader_Project003
 
             double days, months, years;
 
-            // string path = "C:\\test\\sample_family.ged";
+            //string path = "C:\\test\\sample_family.ged";
 
-            string path = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\sample_family.ged";
+            string path ="C:\\Users\\Amit\\Desktop\\myged\\sample_family.ged";
 
-            string outputpath = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\output.txt";
+            //string path = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\sample_family.ged";
+
+            //string outputpath = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\output.txt";
+
+
+            string outputpath = "C:\\Users\\Amit\\Desktop\\myged\\output.txt";
 
             //  File.Create(outputpath);
 
@@ -266,9 +271,9 @@ namespace Gedcomreader_Project003
 
             Console.WriteLine("\n");
             fileout.WriteLine("\n");
-
-            Console.WriteLine("\t\t\t\t\tSprint1 : Users stories 3,5  ");
-            fileout.WriteLine("\t\t\t\t\tSprint1 : Users stories 3,5  ");
+            Console.WriteLine("\t\t\t\t\t Amitkumar Mistry Users stories 4,5  ");
+            Console.WriteLine("\t\t\t\t\tSprint1 : Users stories 4,5  ");
+            fileout.WriteLine("\t\t\t\t\tSprint1 : Users stories 4,5  ");
             Console.WriteLine("\t\t\t\t\t------------------------------\n ");
             fileout.WriteLine("\t\t\t\t\t------------------------------\n ");
 
@@ -280,8 +285,8 @@ namespace Gedcomreader_Project003
                 {
                     if (!IsValidDateforMarriageBeforeDeath(ind, fam))
                     {
-                        Console.WriteLine("ERROR: INDIVIDUAL : US3 : " + ind.ID + " : " + " Married " + fam.Married + " after death on " + ind.death);
-                        fileout.WriteLine("ERROR: INDIVIDUAL : US3 : " + ind.ID + " : " + " Married " + fam.Married + " after death on " + ind.death);
+                        Console.WriteLine("ERROR: INDIVIDUAL : US4 : " + ind.ID + " : " + " Married " + fam.Married + " after death on " + ind.death);
+                        fileout.WriteLine("ERROR: INDIVIDUAL : US4 : " + ind.ID + " : " + " Married " + fam.Married + " after death on " + ind.death);
                     }
                 }
 
@@ -316,6 +321,7 @@ namespace Gedcomreader_Project003
             //------------- US 12 and US 14
             Console.Write("\n");
             fileout.WriteLine("\n");
+            Console.WriteLine("\t\t\t\t\t Amitkumar Mistry Users stories 12,14  ");
             Console.WriteLine("\t\t\t\t\tSprint2 : Users stories 12,14  ");
             fileout.WriteLine("\t\t\t\t\tSprint2 : Users stories 12,14  ");
             Console.WriteLine("\t\t\t\t\t------------------------------\n");
@@ -398,6 +404,7 @@ namespace Gedcomreader_Project003
 
             Console.Write("\n");
             fileout.WriteLine("\n");
+            Console.WriteLine("\t\t\t\t\t Amitkumar Mistry Users stories 18,19  ");
             Console.WriteLine("\t\t\t\t\tSprint3 : Users stories 18,19  ");
             fileout.WriteLine("\t\t\t\t\tSprint3 : Users stories 18,19  ");
             Console.WriteLine("\t\t\t\t\t------------------------------\n");

@@ -119,6 +119,7 @@ namespace Gedcomreader_Project003
                             indiObj.death = SubNode[i].Replace("2 DATE ", "").Trim();
                             indiObj.Dead = false;
 
+                            //amit mistry US27:Include individual ages
                             CustomDates.calcuateDayMonthsYears(Convert.ToDateTime(indiObj.BirthDay), (string.IsNullOrEmpty(indiObj.death) ? System.DateTime.Now : Convert.ToDateTime(indiObj.death)), out days, out months, out years);
 
                             indiObj.age = Convert.ToInt16(years);
@@ -128,6 +129,7 @@ namespace Gedcomreader_Project003
                         }else
                         {
                             i=i-2;
+                            //amit mistry US27:Include individual ages
                             CustomDates.calcuateDayMonthsYears(Convert.ToDateTime(indiObj.BirthDay), (string.IsNullOrEmpty(indiObj.death) ? System.DateTime.Now : Convert.ToDateTime(indiObj.death)), out days, out months, out years);
 
                             indiObj.age = Convert.ToInt16(years);
@@ -345,7 +347,7 @@ namespace Gedcomreader_Project003
                     for (int i = 0; i < child.Length; i++)
                     {
                         sonAge = Individuals.Where(ind => ind.ID == child[i]).FirstOrDefault().age;
-
+                        
                         if (CompareAge(sonAge, fatherAge, motherAge))
                         {
                             Console.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father(" + fam.HusbandID + ") age (" + fatherAge + ") or mother(" + fam.Wifeid + ") age (" + motherAge + ") is  older than child (" + child[i] + ")");

@@ -8,6 +8,8 @@ namespace Datelib
 {
     public static class CustomDates
     {
+
+       //Amit Mistry  US27:Include individual ages
         public static void calcuateDayMonthsYears(DateTime starttime, DateTime endtime, out double days, out double months, out double years)
         {
             DateTime zeroTime = new DateTime(1, 1, 1);

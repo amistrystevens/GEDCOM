@@ -1,0 +1,536 @@
+0 NOTE ANTHONY SETOLAS SUBMISSION
+Level is 0
+NOTE
+--------------------------------
+0 HEAD
+Level is 0
+HEAD
+--------------------------------
+0 NOTE define Anthony Setola
+Level is 0
+NOTE
+--------------------------------
+0 I01 INDI
+Level is 0
+INDI
+--------------------------------
+1 NAME Anthony /Setsdola/
+Level is 1
+NAME
+--------------------------------
+1 BIRT
+Level is 1
+BIRT
+--------------------------------
+2 DATE 11 MAR 1995
+Level is 2
+DATE
+--------------------------------
+1 SEX M
+Level is 1
+SEX
+--------------------------------
+1 FAMC F01
+Level is 1
+FAMC
+--------------------------------
+0 NOTE define Joe Setola
+Level is 0
+NOTE
+--------------------------------
+0 I02 INDI
+Level is 0
+INDI
+--------------------------------
+1 NAME Joe /Setola/
+Level is 1
+NAME
+--------------------------------
+1 BIRT
+Level is 1
+BIRT
+--------------------------------
+2 DATE 5 JUL 1993
+Level is 2
+DATE
+--------------------------------
+1 SEX M
+Level is 1
+SEX
+--------------------------------
+1 FAMC F01
+Level is 1
+FAMC
+--------------------------------
+0 NOTE define James Setola
+Level is 0
+NOTE
+--------------------------------
+0 I03 INDI
+Level is 0
+INDI
+--------------------------------
+1 NAME James /Setola/
+Level is 1
+NAME
+--------------------------------
+1 BIRT
+Level is 1
+BIRT
+--------------------------------
+2 DATE 5 JUL 1997
+Level is 2
+DATE
+--------------------------------
+1 SEX M
+Level is 1
+SEX
+--------------------------------
+1 FAMC F01
+Level is 1
+FAMC
+--------------------------------
+0 NOTE define Orlando Setola
+Level is 0
+NOTE
+--------------------------------
+0 I04 INDI
+Level is 0
+INDI
+--------------------------------
+1 NAME Orlando /Setola/
+Level is 1
+NAME
+--------------------------------
+1 BIRT
+Level is 1
+BIRT
+--------------------------------
+2 DATE 23 DEC 1986
+Level is 2
+DATE
+--------------------------------
+1 SEX M
+Level is 1
+SEX
+--------------------------------
+1 FAMS F01
+Level is 1
+FAMS
+--------------------------------
+1 FAMC F02
+Level is 1
+FAMC
+--------------------------------
+0 NOTE define Donna Setola
+Level is 0
+NOTE
+--------------------------------
+0 I05 INDI
+Level is 0
+INDI
+--------------------------------
+1 NAME Donna /Setola/
+Level is 1
+NAME
+--------------------------------
+1 BIRTH
+Level is 1
+INVALID ID
+--------------------------------
+2 DATE 30 OCT 1985
+Level is 2
+DATE
+--------------------------------
+1 SEX F
+Level is 1
+SEX
+--------------------------------
+1 FAMS F01
+Level is 1
+FAMS
+--------------------------------
+1 FAMC F03
+Level is 1
+FAMC
+--------------------------------
+0 NOTE define Luigi Setola
+Level is 0
+NOTE
+--------------------------------
+0 I06 INDI
+Level is 0
+INDI
+--------------------------------
+1 NAME Luigi /Setola/
+Level is 1
+NAME
+--------------------------------
+1 BIRTH
+Level is 1
+INVALID ID
+--------------------------------
+2 DATE 3 OCT 1920
+Level is 2
+DATE
+--------------------------------
+1 SEX M
+Level is 1
+SEX
+--------------------------------
+1 FAMS F02
+Level is 1
+FAMS
+--------------------------------
+0 NOTE define Rosa Setola
+Level is 0
+NOTE
+--------------------------------
+0 I07 INDI
+Level is 0
+INDI
+--------------------------------
+1 NAME Rosa /Setola/
+Level is 1
+NAME
+--------------------------------
+1 BIRTH
+Level is 1
+INVALID ID
+--------------------------------
+2 DATE 30 JAN 1920
+Level is 2
+DATE
+--------------------------------
+1 SEX F
+Level is 1
+SEX
+--------------------------------
+1 FAMS F02
+Level is 1
+FAMS
+--------------------------------
+0 NOTE define Gail Blumenthal
+Level is 0
+NOTE
+--------------------------------
+0 I08 INDI
+Level is 0
+INDI
+--------------------------------
+1 NAME Gail /Blumenthal/
+Level is 1
+NAME
+--------------------------------
+1 BIRTH
+Level is 1
+INVALID ID
+--------------------------------
+2 DATE 30 JAN 1920
+Level is 2
+DATE
+--------------------------------
+1 SEX F
+Level is 1
+SEX
+--------------------------------
+1 FAMS F03
+Level is 1
+FAMS
+--------------------------------
+0 NOTE define Allen Blumenthal
+Level is 0
+NOTE
+--------------------------------
+0 I09 INDI
+Level is 0
+INDI
+--------------------------------
+1 NAME Allen /Blumenthal/
+Level is 1
+NAME
+--------------------------------
+1 BIRTH
+Level is 1
+INVALID ID
+--------------------------------
+2 DATE 7 MAR 1920
+Level is 2
+DATE
+--------------------------------
+1 SEX M
+Level is 1
+SEX
+--------------------------------
+1 FAMS F03
+Level is 1
+FAMS
+--------------------------------
+0 NOTE define Helene Setola
+Level is 0
+NOTE
+--------------------------------
+0 I10 INDI
+Level is 0
+INDI
+--------------------------------
+1 NAME Helene /Setola/
+Level is 1
+NAME
+--------------------------------
+1 BIRTH
+Level is 1
+INVALID ID
+--------------------------------
+2 DATE 2 SEP 1985
+Level is 2
+DATE
+--------------------------------
+1 DEAT
+Level is 1
+DEAT
+--------------------------------
+2 DATE 3 SEP 1999
+Level is 2
+DATE
+--------------------------------
+1 SEX F
+Level is 1
+SEX
+--------------------------------
+1 FAMS F04
+Level is 1
+FAMS
+--------------------------------
+0 NOTE define Jared Setola
+Level is 0
+NOTE
+--------------------------------
+0 I11 INDI
+Level is 0
+INDI
+--------------------------------
+1 NAME Jared /Setola/
+Level is 1
+NAME
+--------------------------------
+1 BIRTH
+Level is 1
+INVALID ID
+--------------------------------
+2 DATE 3 MAR 1994
+Level is 2
+DATE
+--------------------------------
+1 SEX M
+Level is 1
+SEX
+--------------------------------
+1 FAMC F04
+Level is 1
+FAMC
+--------------------------------
+0 NOTE define helga blumenthal
+Level is 0
+NOTE
+--------------------------------
+0 I12 INDI
+Level is 0
+INDI
+--------------------------------
+1 NAME Helga /Blumenthal/
+Level is 1
+NAME
+--------------------------------
+1 BIRTH
+Level is 1
+INVALID ID
+--------------------------------
+2 DATE 1 JAN 1980
+Level is 2
+DATE
+--------------------------------
+1 SEX F
+Level is 1
+SEX
+--------------------------------
+1 FAMS F03
+Level is 1
+FAMS
+--------------------------------
+0 NOTE define Anthony Setola Family
+Level is 0
+NOTE
+--------------------------------
+0 F01 FAM
+Level is 0
+FAM
+--------------------------------
+1 MARR
+Level is 1
+MARR
+--------------------------------
+2 DATE 20 APR 1991
+Level is 2
+DATE
+--------------------------------
+1 WIFE I04
+Level is 1
+WIFE
+--------------------------------
+1 WIFE I05
+Level is 1
+WIFE
+--------------------------------
+1 CHIL I01
+Level is 1
+CHIL
+--------------------------------
+1 CHIL I02
+Level is 1
+CHIL
+--------------------------------
+1 CHIL I03
+Level is 1
+CHIL
+--------------------------------
+1 _CURRENT Y
+Level is 1
+INVALID ID
+--------------------------------
+0 NOTE define Orlando Setola First Marraige
+Level is 0
+NOTE
+--------------------------------
+0 F04 FAM
+Level is 0
+FAM
+--------------------------------
+1 MARR
+Level is 1
+MARR
+--------------------------------
+2 DATE 1 JAN 2000
+Level is 2
+DATE
+--------------------------------
+1 HUSB I04
+Level is 1
+HUSB
+--------------------------------
+1 WIFE I10
+Level is 1
+WIFE
+--------------------------------
+1 CHIL I11
+Level is 1
+CHIL
+--------------------------------
+1 _CURRENT N
+Level is 1
+INVALID ID
+--------------------------------
+0 NOTE define Orlando Setola Family
+Level is 0
+NOTE
+--------------------------------
+0 F02 FAM
+Level is 0
+FAM
+--------------------------------
+1 MARR
+Level is 1
+MARR
+--------------------------------
+2 DATE 10 MAR 1940
+Level is 2
+DATE
+--------------------------------
+1 HUSB I06
+Level is 1
+HUSB
+--------------------------------
+1 WIFE I07
+Level is 1
+WIFE
+--------------------------------
+1 CHIL I04
+Level is 1
+CHIL
+--------------------------------
+1 _CURRENT Y
+Level is 1
+INVALID ID
+--------------------------------
+0 NOTE define Donna Setola Family
+Level is 0
+NOTE
+--------------------------------
+0 F03 FAM
+Level is 0
+FAM
+--------------------------------
+1 MARR
+Level is 1
+MARR
+--------------------------------
+2 DATE 2 APR 1942
+Level is 2
+DATE
+--------------------------------
+1 HUSB I09
+Level is 1
+HUSB
+--------------------------------
+1 WIFE I08
+Level is 1
+WIFE
+--------------------------------
+1 CHIL I05
+Level is 1
+CHIL
+--------------------------------
+1 CHIL I12
+Level is 1
+CHIL
+--------------------------------
+1 _CURRENT Y
+Level is 1
+INVALID ID
+--------------------------------
+0 NOTE define James Setola Family
+Level is 0
+NOTE
+--------------------------------
+0 F04 FAM
+Level is 0
+FAM
+--------------------------------
+1 MARR
+Level is 1
+MARR
+--------------------------------
+2 DATE 2 APR 2005
+Level is 2
+DATE
+--------------------------------
+1 HUSB I03
+Level is 1
+HUSB
+--------------------------------
+1 WIFE I12
+Level is 1
+WIFE
+--------------------------------
+0 TRLR
+Level is 0
+TRLR
+--------------------------------
+##############ERRORS##############
+A person is married more than once
+Not every male has the same name
+A Male is a Wife
+An uncle or Aunt is married to a niece or nephew
+Someone was married before they turned 14
+Someone was married before they turned 14
+One person in a marraige is more than twice the age of the other

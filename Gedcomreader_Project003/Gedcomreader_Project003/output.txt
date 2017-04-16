@@ -1,0 +1,164 @@
+----------------------------------------------------------------------------------------------------
+|    ID    |   NAME   |  Gender  | Birthday |   Age    |  Alive   |  Death   |  child   |  spouse  |
+----------------------------------------------------------------------------------------------------
+    I01     Joe Smith      M      15 JUL 1901   78     False    14 FEB 1980              F23     I07
+----------------------------------------------------------------------------------------------------
+    I07Jennifer Smith      F      23 SEP 1901  115      True                             F23     I01
+----------------------------------------------------------------------------------------------------
+    I19    Dick Smith      M      13 FEB 1981   36      True                                     I32
+----------------------------------------------------------------------------------------------------
+    I30   Timmy Smith      M      13 FEB 1981   36      True                                        
+----------------------------------------------------------------------------------------------------
+    I31     Ram Smith      M      13 FEB 1981   36      True                                        
+----------------------------------------------------------------------------------------------------
+    I32   faama Smith      f      13 FEB 1981   36      True                                     I19
+----------------------------------------------------------------------------------------------------
+    I25    Jone Smith      F      13 FEB 1981   36      True                                        
+----------------------------------------------------------------------------------------------------
+    I26    Jane Smith      F      13 FEB 1981   36      True                                        
+----------------------------------------------------------------------------------------------------
+    I27    Jeni Smith      F      13 FEB 1981   36      True                                        
+----------------------------------------------------------------------------------------------------
+    I53     Joe Smith      M      15 JUL 1900  150     False    15 JUL 2050              F24        
+----------------------------------------------------------------------------------------------------
+    I54Jennifer Smith      F      23 SEP 1900  149     False    23 SEP 2049              F24        
+----------------------------------------------------------------------------------------------------
+    I55    Dick Smith      M      13 FEB 1900  117      True                                        
+----------------------------------------------------------------------------------------------------
+    I60     Tom Smith             13 FEB 1985    8     False    13 FEB 1993                      I61
+----------------------------------------------------------------------------------------------------
+    I61   Ellen Smith             13 FEB 1985    8     False    13 FEB 1993                      I60
+----------------------------------------------------------------------------------------------------
+    I62   Danny Smith             13 FEB 1985   11     False    13 FEB 1996                      I63
+----------------------------------------------------------------------------------------------------
+    I63   Kelly Smith             13 FEB 1985   11     False    13 FEB 1996                      I62
+----------------------------------------------------------------------------------------------------
+    I70   Danny Smith                         2016      True                                        
+----------------------------------------------------------------------------------------------------
+    I70   Jimmy Smith                         2016      True                                        
+----------------------------------------------------------------------------------------------------
+    I71    Danny Jack                         2016      True                                        
+----------------------------------------------------------------------------------------------------
+    I80    Beau Smith             13 FEB 1985   32      True                                        
+----------------------------------------------------------------------------------------------------
+    I81    Beau Smith             14 FEB 1985   32      True                                        
+----------------------------------------------------------------------------------------------------
+    I82   Kevin Smith             13 FEB 1985   32      True                                        
+----------------------------------------------------------------------------------------------------
+    I83   Kenny Smith             13 FEB 1985   32      True                                        
+----------------------------------------------------------------------------------------------------
+    I84  Jarred Smith             13 FEB 1985   32      True                                        
+----------------------------------------------------------------------------------------------------
+    I85  Jarred Smith             13 FEB 1985   32      True                                        
+----------------------------------------------------------------------------------------------------
+    I85   Benji Smith                         2016      True                                        
+----------------------------------------------------------------------------------------------------
+  I1014   Danny Smith                         2016      True                                   I1015
+----------------------------------------------------------------------------------------------------
+  I1015   Kelly Smith                         2016      True                                   I1014
+----------------------------------------------------------------------------------------------------
+  I1016   Danny Smith                         2016      True                                   I1017
+----------------------------------------------------------------------------------------------------
+  I1017   Kelly Smith                         2016      True                                   I1016
+----------------------------------------------------------------------------------------------------
+  I1018 Jeffrey Smith                         2016      True                                   I1019
+----------------------------------------------------------------------------------------------------
+  I1019  Morgan Smith                         2016      True                                   I1018
+----------------------------------------------------------------------------------------------------
+  I1020YoungGuy Smith             13 MAR 1977   40      True                                        
+----------------------------------------------------------------------------------------------------
+  I1021YoungerGuy Smith             13 MAR 1978   39      True                                        
+----------------------------------------------------------------------------------------------------
+  I1022YoungGuy Smith             13 MAR 1977   40      True                                        
+----------------------------------------------------------------------------------------------------
+  I1023YoungestGuy Smith             13 MAR 1979   38      True                                        
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+| FAMILYID  |  MARRID   | DIVORCED  | HUSBANDID |HUSBANDNAME|  WIFEID   | WIFENAME  | CHILDREN  |
+----------------------------------------------------------------------------------------------------
+    F23    14 FEB 1980    14 FEB 2050            I01 Joe Smith  I07Jennifer Smith,I19,I30,I31,I32,I25,I26,I27
+    F27    14 FEB 2051    14 FEB 2050            I19Dick Smith  I32faama Smith               
+    F25    13 FEB 1992    13 FEB 1994            I60 Tom Smith  I61Ellen Smith               
+    F26    13 FEB 1992    13 FEB 1994            I62Danny Smith  I63Kelly Smith               
+    F30                                                                                     
+    F73    13 FEB 1936    13 FEB 1937          I1014Danny SmithI1015Kelly Smith               
+    F74    13 FEB 1936    13 FEB 1937          I1016Danny SmithI1017Kelly Smith               
+    F75    13 FEB 1936    13 FEB 1937          I1018Jeffrey SmithI1019Morgan Smith,I1020,I1021,I1022,I1023
+
+
+					Sprint1 : Users stories 4,5  
+					------------------------------
+ 
+ERROR: INDIVIDUAL : US4 : I01 :  Married 14 FEB 1980 after death on 14 FEB 1980
+ERROR: FAMILY : US5 : F27: Divorced on: 14 FEB 2050 before married 14 FEB 2051
+
+
+					Sprint1 : Users stories 1,29  
+					------------------------------
+ 
+INDIVIDUALS WITH DATES AFTER CURRENT DATE: 4/16/2017 12:00:00 AM
+ERROR: INDIVIDUAL : US01 : Joe SmithHas Death Date: 15 JUL 2050
+ERROR: INDIVIDUAL : US01 : Jennifer SmithHas Death Date: 23 SEP 2049
+
+
+FAMILIES WITH DATES BEFORE CURRENT DATE: 4/16/2017 12:00:00 AM
+ERROR: FAMILY : US01 : F23Has Divorce Date: 14 FEB 1980
+ERROR: FAMILY : US01 : F27Has Marriage Date: 14 FEB 2051
+ERROR: FAMILY : US01 : F27Has Divorce Date: 14 FEB 2051
+
+
+DEAD INDIVIDUALS BEFORE GIVEN DATE: 3/24/1996 12:00:00 AM
+ERROR: INDIVIDUAL : US29 :Joe Smith Died on: 14 FEB 1980
+ERROR: INDIVIDUAL : US29 :Tom Smith Died on: 13 FEB 1993
+ERROR: INDIVIDUAL : US29 :Ellen Smith Died on: 13 FEB 1993
+ERROR: INDIVIDUAL : US29 :Danny Smith Died on: 13 FEB 1996
+ERROR: INDIVIDUAL : US29 :Kelly Smith Died on: 13 FEB 1996
+
+
+					Sprint2 : Users stories 12,14  
+					------------------------------
+
+ERROR: FAMILY : US12 : F23 father(I01) age (78) or mother(I07) age (115) is  older than child (I19)
+ERROR: FAMILY : US14 : Family F23 has 7 siblings 
+ERROR: FAMILY : US12 : F75 father(I1018) age (2016) or mother(I1019) age (2016) is  older than child (I1020)
+ERROR: FAMILY : US14 : Family F75 has 11 siblings 
+
+
+					Sprint2 : Users stories 06,07  
+					------------------------------
+
+ERROR: FAMILY : US5 : F23: Died on  before Divorced 14 FEB 2050
+ERROR: FAMILY : US5 : F27: Died on  before Divorced 14 FEB 2050
+ERROR: FAMILY : US5 : F25: Died on  before Divorced 13 FEB 1994
+ERROR: FAMILY : US5 : F26: Died on  before Divorced 13 FEB 1994
+ERROR: FAMILY : US5 : F30: Died on  before Divorced 
+ERROR: FAMILY : US5 : F73: Died on  before Divorced 13 FEB 1937
+ERROR: FAMILY : US5 : F74: Died on  before Divorced 13 FEB 1937
+ERROR: FAMILY : US5 : F75: Died on  before Divorced 13 FEB 1937
+ERROR: INDIVIDUAL : US07 : Family I53 has Birth 15 JUL 1900 and Death 15 JUL 2050
+
+
+					Sprint3 : Users stories 18,19  
+					------------------------------
+
+ERROR: FAMILY : US18 : F27: I19 cannot marry to siblings I32
+ERROR: FAMILY : US19 : F23: I19 First cousins should not marry one another  I32
+ERROR: FAMILY : US19 : F23: I32 First cousins should not marry one another  I19
+
+
+					Sprint3 : Users stories 22,23  
+					------------------------------
+
+ERROR: INDIVIDUAL : US22 : I70Name: Jimmy SmithName: Danny Smith  Individual ID's Match
+ERROR: INDIVIDUAL : US22 : I85Name: Benji SmithName: Jarred Smith  Individual ID's Match
+ERROR: INDIVIDUAL : US23 : Jarred Smith 13 FEB 1985 Individual Names and Birthdays Match
+ERROR: INDIVIDUAL : US23 : YoungGuy Smith 13 MAR 1977 Individual Names and Birthdays Match
+
+
+					Sprint4 : Users stories 24,25  
+					------------------------------
+
+ERROR: FAMILY : US24 : Husband: Danny Smith, Wife: Kelly Smith Marriage date: 13 FEB 1936, Duplicate Entry Exists
+ERROR: FAMILY : US25 : Name: YoungGuy Smith, Birthday: 13 MAR 1977, Duplicate Entry Exists

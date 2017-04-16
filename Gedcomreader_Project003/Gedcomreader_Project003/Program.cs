@@ -31,14 +31,14 @@ namespace Gedcomreader_Project003
 
             //string path = "C:\\test\\sample_family.ged";
 
-            string path ="C:\\Users\\Amit\\Desktop\\myged\\sample_family.ged";
+            //string path ="C:\\Users\\Amit\\Desktop\\myged\\sample_family.ged";
 
-            //string path = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\sample_family.ged";
+            string path = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\sample_family.ged";
 
-            //string outputpath = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\output.txt";
+            string outputpath = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\output.txt";
 
 
-            string outputpath = "C:\\Users\\Amit\\Desktop\\myged\\output.txt";
+            //string outputpath = "C:\\Users\\Amit\\Desktop\\myged\\output.txt";
 
             //  File.Create(outputpath);
 
@@ -239,12 +239,13 @@ namespace Gedcomreader_Project003
                 {
                     if (mem.HusbandID == ind.ID)
                     {
+                        mem.Husbandname = ind.Name;
                         ind.spouse = mem.Wifeid;
                     }
 
                     if (mem.Wifeid == ind.ID)
                     {
-
+                        mem.Wifename = ind.Name;
                         ind.spouse = mem.HusbandID;
                     }
 
@@ -504,6 +505,36 @@ namespace Gedcomreader_Project003
                 }
             }
 
+            Console.Write("\n");
+            fileout.WriteLine("\n");
+            Console.WriteLine("\t\t\t\t\tSprint4 : Users stories 24,25  ");
+            fileout.WriteLine("\t\t\t\t\tSprint4 : Users stories 24,25  ");
+            Console.WriteLine("\t\t\t\t\t------------------------------\n");
+            fileout.WriteLine("\t\t\t\t\t------------------------------\n");
+
+            List<FAM> resultsFamily = new List<FAM>();
+            List<INDI> matches = new List<INDI>();
+
+            if(!isUniqueFamily(Family, ref resultsFamily))
+            {
+                foreach (FAM f in resultsFamily)
+                {
+                    Console.WriteLine("ERROR: FAMILY : US24 : Husband: " + f.Husbandname + ", Wife: " + f.Wifename +  " Marriage date: " + f.Married + ", Duplicate Entry Exists");
+                    fileout.WriteLine("ERROR: FAMILY : US24 : Husband: " + f.Husbandname + ", Wife: " + f.Wifename + " Marriage date: " + f.Married + ", Duplicate Entry Exists");
+                }
+            }
+             
+            foreach (FAM f in Family)
+            {
+                if(!isUniqueFamilyNames(f, Individuals, ref matches))
+                {
+                    for (int i = 0; i < matches.Count; i ++)
+                    {
+                        Console.WriteLine("ERROR: FAMILY : US25 : Name: " + matches[i].Name + ", Birthday: " + matches[i].BirthDay + ", Duplicate Entry Exists");
+                        fileout.WriteLine("ERROR: FAMILY : US25 : Name: " + matches[i].Name + ", Birthday: " + matches[i].BirthDay + ", Duplicate Entry Exists");
+                    }
+                }
+            }
 
 
             // Keep the console window open in debug mode.
@@ -883,7 +914,8 @@ namespace Gedcomreader_Project003
             {
                 changed = true;
                 Console.WriteLine("ERROR: INDIVIDUAL : US01 : " + i.Name + "Has Death Date: " + i.death);
-                fileout.WriteLine("ERROR: INDIVIDUAL : US01 : " + i.Name + "Has Death Date: " + i.death);
+                if(fileout != null)
+                    fileout.WriteLine("ERROR: INDIVIDUAL : US01 : " + i.Name + "Has Death Date: " + i.death);
             }
             if (i.BirthDay == null || i.BirthDay.Equals(""))
             {
@@ -893,7 +925,8 @@ namespace Gedcomreader_Project003
             {
                 changed = true;
                 Console.WriteLine("ERROR: INDIVIDUAL : US01 : " + i.Name + "Has Birth Date: " + i.death);
-                fileout.WriteLine("ERROR: INDIVIDUAL : US01 : " + i.Name + "Has Birth Date: " + i.death);
+                if (fileout != null)
+                    fileout.WriteLine("ERROR: INDIVIDUAL : US01 : " + i.Name + "Has Birth Date: " + i.death);
             }
 
             return changed;
@@ -920,7 +953,8 @@ namespace Gedcomreader_Project003
             {
                 changed = true;
                 Console.WriteLine("ERROR: FAMILY : US01 : " + f.FamID + "Has Marriage Date: " + f.Married);
-                fileout.WriteLine("ERROR: FAMILY : US01 : " + f.FamID + "Has Marriage Date: " + f.Married);
+                if (fileout != null)
+                    fileout.WriteLine("ERROR: FAMILY : US01 : " + f.FamID + "Has Marriage Date: " + f.Married);
             }
             if (f.Divorced == null || f.Divorced.Equals(""))
             {
@@ -930,7 +964,8 @@ namespace Gedcomreader_Project003
             {
                 changed = true;
                 Console.WriteLine("ERROR: FAMILY : US01 : " + f.FamID + "Has Divorce Date: " + f.Married);
-                fileout.WriteLine("ERROR: FAMILY : US01 : " + f.FamID + "Has Divorce Date: " + f.Married);
+                if (fileout != null)
+                    fileout.WriteLine("ERROR: FAMILY : US01 : " + f.FamID + "Has Divorce Date: " + f.Married);
             }
 
             return changed;
@@ -1116,6 +1151,94 @@ namespace Gedcomreader_Project003
             }
             return endResult;
         }
+
+        /// <summary>
+        /// US024	Unique families by spouses
+        /// </summary>
+        /// <param name="fam"></param>
+        /// <returns> bool </returns>
+        
+        public static bool isUniqueFamily (List<FAM> fam, ref List<FAM> results)
+        {
+            bool unique = true;
+
+            List<string> familyDetails = new List<string>();
+            //Store in order husband, wife, marriage date
+
+            foreach (FAM f in fam)
+            {
+                for (int i = 0; i < familyDetails.Count(); i+=3)
+                {
+                    if (f.Husbandname != null && f.Husbandname.Equals(familyDetails[i]))
+                    {
+                        if (f.Wifename != null && f.Wifename.Equals(familyDetails[i+1]))
+                        {
+                            if (f.Married != null && f.Married.Equals(familyDetails[i+2]))
+                            {
+                                unique = false;
+                                results.Add(f);
+                            }
+                        }
+                    }
+                }
+                familyDetails.Add(f.Husbandname);
+                familyDetails.Add(f.Wifename);
+                familyDetails.Add(f.Married);
+            }
+
+            return unique;
+        }
+
+        /// <summary>
+        /// US025	Unique names in family
+        /// </summary>
+        /// <param name="famObj"></param>
+        /// <returns> bool </returns>
+
+        public static bool isUniqueFamilyNames(FAM fam, List<INDI> indi, ref List<INDI> matches)
+        {
+            bool unique = true;
+            
+            List<INDI> children = new List<INDI>();
+            List<INDI> parsedChildren = new List<INDI>();
+
+            if (fam.childeren == null)
+                return true;
+            char[] delimeter = { ',' };
+            string[] childrenIDs = fam.childeren.Split(delimeter);
+
+            for (int i = 0; i < childrenIDs.Length; i++)
+            {
+                foreach (INDI ind in indi)
+                {
+                    if (childrenIDs[i].Equals(ind.ID))
+                    {
+                        children.Add(ind);
+                    }
+
+                }
+            }
+
+            for (int i = 0; i < children.Count; i++)
+            {
+                for(int j = 0; j < parsedChildren.Count; j++)
+                {
+                    if ((children[i].Name != null) && parsedChildren[j].Name.Equals(children[i].Name))
+                    {
+                        if((children[i].BirthDay != null ) && children[j].BirthDay.Equals(children[i].BirthDay))
+                        //Ensure duplicate entries aren't added
+                        if (!matches.Contains(children[j]))
+                            matches.Add(children[j]);
+                        unique = false;
+                    }
+                }
+            
+                parsedChildren.Add(children[i]);
+            }
+            
+            return unique;
+        }
+
 
         #region Printer Methods
         private static int FindIndexinArray(string[] Arr, string search)

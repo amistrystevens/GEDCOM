@@ -39,17 +39,17 @@ namespace GedComUnitTest
             Assert.NotNull(i);
             Assert.NotNull(f);
 
-            bool actual = Gedcomreader_Project003.Program.isDateAfterTodayIndi(ref i);
+            bool actual = Gedcomreader_Project003.Program.isDateAfterTodayIndi(ref i, null);
 
             Assert.Equal(false, actual);
 
-            actual = Gedcomreader_Project003.Program.isDateAfterTodayFam(ref f);
+            actual = Gedcomreader_Project003.Program.isDateAfterTodayFam(ref f, null);
 
             Assert.Equal(false, actual);
 
 
-            Assert.False(Gedcomreader_Project003.Program.isDateAfterTodayIndi(ref i));
-            Assert.False(Gedcomreader_Project003.Program.isDateAfterTodayFam(ref f));
+            Assert.False(Gedcomreader_Project003.Program.isDateAfterTodayIndi(ref i, null));
+            Assert.False(Gedcomreader_Project003.Program.isDateAfterTodayFam(ref f, null));
 
             Assert.IsType<INDI>(i);
             Assert.IsType<FAM>(f);
@@ -83,11 +83,11 @@ namespace GedComUnitTest
             DateTime day = new DateTime(1996, 3, 24);
 
             //Test if the user is actually dead (he isn't
-            bool actual = Gedcomreader_Project003.Program.isDateAfterTodayIndi(ref i);
+            bool actual = Gedcomreader_Project003.Program.isDateAfterTodayIndi(ref i, null);
 
             Assert.Equal(false, actual);
 
-            actual = Gedcomreader_Project003.Program.isDateAfterTodayFam(ref f);
+            actual = Gedcomreader_Project003.Program.isDateAfterTodayFam(ref f, null);
 
             Assert.Equal(false, actual);
         }
@@ -107,7 +107,7 @@ namespace GedComUnitTest
 
             DateTime day = new DateTime(1996, 3, 24);
 
-            bool actual = Gedcomreader_Project003.Program.isDateAfterTodayIndi(ref i);
+            bool actual = Gedcomreader_Project003.Program.isDateAfterTodayIndi(ref i, null);
 
             Assert.Equal(true, actual);
 
@@ -132,7 +132,7 @@ namespace GedComUnitTest
 
             DateTime day = new DateTime(1996, 3, 24);
 
-            bool actual = Gedcomreader_Project003.Program.isDateAfterTodayIndi(ref i);
+            bool actual = Gedcomreader_Project003.Program.isDateAfterTodayIndi(ref i, null);
 
             Assert.Equal(true, actual);
         }
@@ -148,7 +148,7 @@ namespace GedComUnitTest
 
             DateTime day = new DateTime(1996, 3, 24);
 
-            bool actual = Gedcomreader_Project003.Program.isDateAfterTodayFam(ref f);
+            bool actual = Gedcomreader_Project003.Program.isDateAfterTodayFam(ref f, null);
 
             Assert.Equal(true, actual);
 
@@ -165,7 +165,7 @@ namespace GedComUnitTest
 
             DateTime day = new DateTime(1996, 3, 24);
 
-            bool actual = Gedcomreader_Project003.Program.isDateAfterTodayFam(ref f);
+            bool actual = Gedcomreader_Project003.Program.isDateAfterTodayFam(ref f, null);
 
             Assert.Equal(true, actual);
 

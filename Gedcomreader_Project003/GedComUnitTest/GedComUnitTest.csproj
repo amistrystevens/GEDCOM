@@ -61,10 +61,13 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="DateBeforeTodayTest.cs" />
     <Compile Include="ListDeceasedTest.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="US06_07Tests.cs" />
+    <Compile Include="US22_23Tests.cs" />
+    <Compile Include="US24_25Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

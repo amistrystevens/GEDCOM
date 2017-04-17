@@ -6,6 +6,7 @@ using Gedcomreader_Project003.GedcomCls;
 using Gedcomreader_Project003.Utilities;
 using System.Collections.Generic;
 using System.Collections;
+using Datelib;
 
 namespace GedComUnitTest
 {
@@ -397,6 +398,154 @@ namespace GedComUnitTest
 
 
         }
+
+
+
+        public class UnitTestUserStrory_27_28
+        {
+
+            //amit mistry US27:Include individual ages
+
+            [Fact]
+
+            public void calcuateDayMonthsYearsTest()
+            {
+
+                INDI indiObj =
+
+                    new INDI
+                    {
+                        age = 33,
+                        Alive = true,
+                        BirthDay = "22 JAN 1984",
+                        Child = "ID1",
+                        death = null,
+                        ID = "ID21",
+                        Name = "TEST123",
+                        Dead = false,
+                        Sex = "M",
+                        spouse = "ID22"
+                    };
+
+                double days, months, years;
+
+                CustomDates.calcuateDayMonthsYears(Convert.ToDateTime(indiObj.BirthDay), (string.IsNullOrEmpty(indiObj.death) ? System.DateTime.Now : Convert.ToDateTime(indiObj.death)), out days, out months, out years);
+
+                Assert.Equal(indiObj.age, years);
+
+                indiObj =
+
+                   new INDI
+                   {
+                       age = 16,
+                       Alive = false,
+                       BirthDay = "22 JAN 1984",
+                       Child = "ID1",
+                       death = "22 JAN 2000",
+                       ID = "ID21",
+                       Name = "TEST123",
+                       Dead = true,
+                       Sex = "M",
+                       spouse = "ID22"
+                   };
+
+                CustomDates.calcuateDayMonthsYears(Convert.ToDateTime(indiObj.BirthDay), (string.IsNullOrEmpty(indiObj.death) ? System.DateTime.Now : Convert.ToDateTime(indiObj.death)), out days, out months, out years);
+
+                Assert.Equal(indiObj.age, years);
+
+            }
+
+
+            //US28 Order siblings by age List siblings in families by decreasing age, i.e.oldest siblings first
+
+            [Fact]
+
+            public void OrderedSiblingsTest()
+            {
+                FAM f = new FAM();
+                f.childeren = "ID1,ID2,ID3,ID4";
+                f.Divorced = null;
+                f.FamID = "Family1";
+                f.HusbandID = "ID11";
+                f.Husbandname = "test";
+                f.Married = "12 MAR 1995";
+
+                List<INDI> lst = new List<INDI>();
+                lst.Add(new INDI
+                {
+                    age = 27,
+                    Alive = true,
+                    BirthDay = "22 JAN 1990",
+                    Child = "ID12",
+                    death = null,
+                    ID = "ID1",
+                    Name = "Jone Doe",
+                    Dead = false,
+                    Sex = "M",
+                    spouse = "ID21"
+                }
+                );
+
+                lst.Add(new INDI
+                {
+                    age = 35,
+                    Alive = true,
+                    BirthDay = "22 JAN 1982",
+                    Child = "ID112",
+                    death = "22 JAN 2017",
+                    ID = "ID2",
+                    Name = "Jone Doe2",
+                    Dead = false,
+                    Sex = "M",
+                    spouse = "ID22"
+                });
+
+
+                lst.Add(new INDI
+                {
+                    age = 32,
+                    Alive = true,
+                    BirthDay = "22 JAN 1984",
+                    Child = "ID113",
+                    death = "12 JAN 2016",
+                    ID = "ID3",
+                    Name = "Jone Doe3",
+                    Dead = true,
+                    Sex = "M",
+                    spouse = "ID23"
+                });
+
+
+                lst.Add(new INDI
+                {
+                    age = 20,
+                    Alive = false,
+                    BirthDay = "22 JAN 1997",
+                    Child = null,
+                    death = null,
+                    ID = "ID4",
+                    Name = "Jone Doe4",
+                    Dead = false,
+                    Sex = "M",
+                    spouse = "ID24"
+                });
+
+
+
+                string str = Gedcomreader_Project003.Program.OrderedSiblings(f, lst);
+
+                Assert.NotSame(f.childeren, str);
+
+            }
+
+
+        }
+
+
+
+
+
+
 
 
     }

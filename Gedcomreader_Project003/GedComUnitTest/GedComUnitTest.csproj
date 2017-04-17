@@ -73,6 +73,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Datelib\Datelib.csproj">
+      <Project>{e36b8f4d-f3e5-4160-9fe6-5fd8364bc406}</Project>
+      <Name>Datelib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gedcomreader_Project003\Gedcomreader_Project003.csproj">
       <Project>{e2e8ef86-9d1e-4f2e-874f-f1ff8aceee95}</Project>
       <Name>Gedcomreader_Project003</Name>

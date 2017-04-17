@@ -26,3 +26,11 @@ C:\Github_3_11\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Datelib
 C:\Github_3_11\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Datelib.pdb
 C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Datelib.dll
 C:\Users\Class2017\SSW555\GEDCOM\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Datelib.pdb
+C:\Sprint4Git\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Gedcomreader_Project003.exe.config
+C:\Sprint4Git\Gedcomreader_Project003\Gedcomreader_Project003\obj\Debug\Gedcomreader_Project003.exe
+C:\Sprint4Git\Gedcomreader_Project003\Gedcomreader_Project003\obj\Debug\Gedcomreader_Project003.pdb
+C:\Sprint4Git\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Gedcomreader_Project003.exe
+C:\Sprint4Git\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Gedcomreader_Project003.pdb
+C:\Sprint4Git\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Datelib.dll
+C:\Sprint4Git\Gedcomreader_Project003\Gedcomreader_Project003\bin\Debug\Datelib.pdb
+C:\Sprint4Git\Gedcomreader_Project003\Gedcomreader_Project003\obj\Debug\Gedcomreader_Project003.csprojResolveAssemblyReference.cache

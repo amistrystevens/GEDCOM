@@ -31,14 +31,14 @@ namespace Gedcomreader_Project003
 
             //string path = "C:\\test\\sample_family.ged";
 
-            //string path ="C:\\Users\\Amit\\Desktop\\myged\\sample_family.ged";
+            string path ="C:\\Users\\Amit\\Desktop\\myged\\sample_family.ged";
 
-            string path = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\sample_family.ged";
+            //string path = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\sample_family.ged";
 
-            string outputpath = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\output.txt";
+            //string outputpath = "c:\\users\\class2017\\ssw555\\gedcom\\gedcomreader_project003\\gedcomreader_project003\\output.txt";
 
 
-            //string outputpath = "C:\\Users\\Amit\\Desktop\\myged\\output.txt";
+            string outputpath = "C:\\Users\\Amit\\Desktop\\myged\\output.txt";
 
             //  File.Create(outputpath);
 
@@ -270,6 +270,30 @@ namespace Gedcomreader_Project003
             PrintRow(fileout,columnsfamily);
             PrintLine(fileout);
 
+
+            //Amit Mistry User stories 28 : Order siblings by age
+            Dictionary<string,string> unorder = new Dictionary<string, string>();
+            Dictionary<string, string> order = new Dictionary<string, string>(); 
+
+            foreach (var f in Family)
+            {
+                if (f != null && Individuals != null && f.childeren != null || f.childeren != string.Empty)
+                {
+                    // order of childeren before run "OrderedSiblings " 
+                    //Console.WriteLine("\t\t\t\t\t Amitkumar Mistry Users stories 28  ");
+                    //Console.WriteLine("order of childeren before run \"OrderedSiblings\" function ");
+                    //Console.WriteLine("Family ID" + f.FamID + "Childeren : >" + f.childeren);
+                    unorder.Add(f.FamID,f.childeren);
+                    string ordchilder = OrderedSiblings(f, Individuals);
+                    string mychildern = ordchilder.Trim(new Char[] { ' ', ',' });
+                    f.childeren = mychildern;
+                    order.Add(f.FamID, f.childeren);
+                    //Console.WriteLine("order of childeren after run \"OrderedSiblings\" function ");
+                    //Console.WriteLine("Family ID" + f.FamID + "Childeren : >" + f.childeren);
+                }
+            }
+
+
             printFamily(Family, fileout);
 
             Console.WriteLine("\n");
@@ -336,7 +360,7 @@ namespace Gedcomreader_Project003
             List<int> birthday = new List<int>();
             foreach (FAM fam in Family)
             {
-                if (fam.childeren != null)
+                if (fam.childeren != null && fam.childeren != "" && fam.childeren != string.Empty && fam.HusbandID != null && fam.Wifeid != null)
                 {
                     var childeren = fam.childeren;
                     string mychildern = childeren.Trim(new Char[] { ' ', ',' });
@@ -347,13 +371,16 @@ namespace Gedcomreader_Project003
 
                     for (int i = 0; i < child.Length; i++)
                     {
-                        sonAge = Individuals.Where(ind => ind.ID == child[i]).FirstOrDefault().age;
-                        
-                        if (CompareAge(sonAge, fatherAge, motherAge))
+                        if (child[i] != null && child[i] != string.Empty)
                         {
-                            Console.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father(" + fam.HusbandID + ") age (" + fatherAge + ") or mother(" + fam.Wifeid + ") age (" + motherAge + ") is  older than child (" + child[i] + ")");
-                            fileout.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father(" + fam.HusbandID + ") age (" + fatherAge + ") or mother(" + fam.Wifeid + ") age (" + motherAge + ") is  older than child (" + child[i] + ")");
-                            break;
+                            sonAge = Individuals.Where(ind => ind.ID == child[i]).FirstOrDefault().age;
+
+                            if (CompareAge(sonAge, fatherAge, motherAge))
+                            {
+                                Console.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father(" + fam.HusbandID + ") age (" + fatherAge + ") or mother(" + fam.Wifeid + ") age (" + motherAge + ") is  older than child (" + child[i] + ")");
+                                fileout.WriteLine("ERROR: FAMILY : US12 : " + fam.FamID + " father(" + fam.HusbandID + ") age (" + fatherAge + ") or mother(" + fam.Wifeid + ") age (" + motherAge + ") is  older than child (" + child[i] + ")");
+                                break;
+                            }
                         }
 
                     }
@@ -361,7 +388,8 @@ namespace Gedcomreader_Project003
 
                     for (int i = 0; i < child.Length; i++)
                     {
-                        birthday.Add(Convert.ToDateTime(Individuals.Where(ind => ind.ID == child[i]).FirstOrDefault().BirthDay).Day);
+                        if (child[i] != null && child[i] != string.Empty)
+                            birthday.Add(Convert.ToDateTime(Individuals.Where(ind => ind.ID == child[i]).FirstOrDefault().BirthDay).Day);
                     }
 
 
@@ -537,8 +565,55 @@ namespace Gedcomreader_Project003
             }
 
 
-            // Keep the console window open in debug mode.
-            Console.WriteLine("\n\n\n\nPress any key to exit.");
+
+            // order of childeren before run "OrderedSiblings " 
+            //Console.WriteLine("\t\t\t\t\t Amitkumar Mistry Users stories 28  ");
+            //Console.WriteLine("order of childeren before run \"OrderedSiblings\" function ");
+            //Console.WriteLine("Family ID" + f.FamID + "Childeren : >" + f.childeren);
+            //unorder.Add(f.FamID, f.childeren);
+            //string ordchilder = OrderedSiblings(f, Individuals);
+            //string mychildern = ordchilder.Trim(new Char[] { ' ', ',' });
+            //f.childeren = mychildern;
+            //order.Add(f.FamID f.childeren);
+            //Console.WriteLine("order of childeren after run \"OrderedSiblings\" function ");
+            //Console.WriteLine("Family ID" + f.FamID + "Childeren : >" + f.childeren);
+
+            //US : 28 OUTPUT
+
+            Console.Write("\n");
+            fileout.WriteLine("\n");
+            Console.WriteLine("\t\t\t\t\tAMIT MISTRY Sprint4 : Users stories 28  ");
+            fileout.WriteLine("\t\t\t\t\tAMIT MISTRY Sprint4 : Users stories 28  ");
+            Console.WriteLine("\t\t\t\t\t------------------------------\n");
+            fileout.WriteLine("\t\t\t\t\t------------------------------\n");
+
+
+            foreach (var uf in unorder)
+            {
+                foreach(var of in order )
+                {
+                    if(uf.Key==of.Key)
+                    {
+                        if (uf.Value != null && uf.Value != "" && uf.Value != string.Empty)
+                        {
+                            Console.WriteLine("\n order of childeren before run \"OrderedSiblings\" function ");
+                            fileout.WriteLine("\n order of childeren before run \"OrderedSiblings\" function ");
+                            Console.WriteLine("Family ID :: > " + uf.Key + " Childeren : > " + uf.Value);
+                            fileout.WriteLine("Family ID :: > " + uf.Key + " Childeren : > " + uf.Value);
+                            Console.WriteLine("after run \"OrderedSiblings\" function ");
+                            fileout.WriteLine("after run \"OrderedSiblings\" function ");
+                            Console.WriteLine("Family ID ::> " + of.Key + " Childeren : > " + of.Value);
+                            fileout.WriteLine("Family ID ::> " + of.Key + " Childeren : > " + of.Value);
+                        }
+                    }
+
+                }
+            }
+
+
+
+        // Keep the console window open in debug mode.
+        Console.WriteLine("\n\n\n\nPress any key to exit.");
             fileout.Flush();
             fileout.Close();
             System.Console.ReadKey();
@@ -771,6 +846,56 @@ namespace Gedcomreader_Project003
             }
             return false;
         }
+
+
+
+
+        /// <summary>
+        /// US 28 : Order  Siblings  by age
+        /// </summary>
+        /// <param name="f"></param>
+        /// <param name="listind"></param>
+        /// <returns>string </returns>
+
+
+        public static string OrderedSiblings(FAM f, List<INDI> listind)
+        {
+            string str = ",";
+            StringBuilder mystr = new StringBuilder();
+            // foreach (FAM m)
+            if (f.childeren != null && f.childeren != string.Empty)
+            {
+                var childeren = f.childeren;
+                string mychildern = childeren.Trim(new Char[] { ' ', ',' });
+                string[] child = mychildern.Split(',');
+                Dictionary<string, int> dc = new Dictionary<string, int>();
+
+                foreach (var chld in child)
+                {
+                    foreach (var ind in listind)
+                    {
+                        if (chld == ind.ID)
+                        {
+                            dc.Add(chld, ind.age);
+                        }
+
+                    }
+                }
+
+                foreach (var item in dc.OrderByDescending(key => key.Value))
+                {
+                    mystr.Append(item.Key + str);
+                }
+
+            }
+            str = mystr.ToString();
+            return str;
+        }
+
+
+
+
+
 
 
         /// <summary>
